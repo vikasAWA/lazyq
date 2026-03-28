@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lazyq"
+dynamic = ["version"]
+description = "A lightweight, chainable query pipeline for Python"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [{name = "vikasAWA", email = "awasthivikas02@gmail.com"}]
+keywords = ['nbdev']
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/vikasAWA/lazyq"
+Documentation = "https://vikasAWA.github.io/lazyq/"
+
+[project.entry-points.nbdev]
+lazyq = "lazyq._modidx:d"
+
+[tool.setuptools.dynamic]
+version = {attr = "lazyq.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["lazyq"]
+
+[tool.nbdev]
+lib_name = "lazyq"
