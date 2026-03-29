@@ -6,33 +6,37 @@
 __all__ = ['SKIP', 'STOP', 'Op', 'Map', 'Filter', 'Limit', 'Select', 'GroupBy', 'Reduce', 'Sort', 'Condition', 'F', 'read_csv',
            'read_sqlite3', 'Query', 'GroupedQuery']
 
-# %% ../nbs/00_core.ipynb #0be2a17d
+# %% ../nbs/00_core.ipynb #afd6ba53
 import csv
 import sqlite3
 
-# %% ../nbs/00_core.ipynb #11ccdbfc
-SKIP = object()
-STOP = object()
+# %% ../nbs/00_core.ipynb #891608f6
+SKIP = object()  # Sentinel: skip this item in the pipeline
+STOP = object() # Sentinel: stop the pipeline immediately
 
-# %% ../nbs/00_core.ipynb #e805af66
+# %% ../nbs/00_core.ipynb #06d22b99
 class Op:
+    """Wraps a factory function and a name to lazily create pipeline operations."""
     def __init__(self, factory, name):
         self.name = name
         self.factory = factory
     def __call__(self): return self.factory()
 
-# %% ../nbs/00_core.ipynb #f232b628
+# %% ../nbs/00_core.ipynb #6ad0181a
 class Map:
+    """Applies a function to each item in the pipeline."""
     def __init__(self, fn): self.fn = fn
     def __call__(self, item): return self.fn(item)
 
 class Filter:
+    """Keeps items where fn(item) is True, skips the rest."""
     def __init__(self, fn): self.fn = fn
     def __call__(self, item):
         if not self.fn(item): return SKIP
         return item
 
 class Limit:
+    """Stops the pipeline after n items."""
     def __init__(self, n):
         self.n = n
         self.count = 0
@@ -42,10 +46,12 @@ class Limit:
         return item
 
 class Select:
+    """Returns only the specified keys from each dict item."""
     def __init__(self, keys): self.keys = keys if isinstance(keys, list) else [keys]
     def __call__(self, item): return {k: item[k] for k in self.keys}
 
 class GroupBy:
+    """Groups items by a key, returning (key, [items]) pairs."""
     def __init__(self, key): self.key = key
     def run(self, data):
         groups = {}
@@ -56,6 +62,7 @@ class GroupBy:
         return groups.items()
 
 class Reduce:
+    """Reduces all items to a single value using fn."""
     def __init__(self, fn, initial=None):
         self.fn = fn
         self.initial = initial
@@ -69,6 +76,7 @@ class Reduce:
         return [acc]
 
 class Sort:
+    """Sorts all items by a key, optionally in reverse order."""
     def __init__(self, key, reverse=False):
         self.key = key
         self.reverse = reverse
@@ -76,22 +84,24 @@ class Sort:
         return sorted(data, key=lambda item: item[self.key] if isinstance(item, dict) else item[self.key], reverse=self.reverse)
 
 
-# %% ../nbs/00_core.ipynb #abd3d4b6
+# %% ../nbs/00_core.ipynb #7ef71120
 class Condition:
+    """A composable condition that can be combined with & for filtering."""
     def __init__(self, fn): self.fn = fn
     def __call__(self, x): return self.fn(x)
     def __and__(self, other): return Condition(lambda x: self(x) and other(x))
 
 class F:
-    def __init__(self, name): self.name = name
-    def __eq__(self, value): return Condition(lambda x: x[self.name] == value)
-    def __gt__(self, value): return Condition(lambda x: x[self.name] > value)
-    def __lt__(self, value): return Condition(lambda x: x[self.name] < value)
-    def not_null(self): return Condition(lambda x: x.get(self.name) is not None)
-    def is_null(self): return Condition(lambda x: x.get(self.name) is None)
+    """A field reference used to build conditions. E.g. F('age') > 18"""
+    def __init__(self, name): self.name = name 
+    def __eq__(self, value): return Condition(lambda x: x[self.name] == value) # F('age') == 'Alice'
+    def __gt__(self, value): return Condition(lambda x: x[self.name] > value) # F('age') > 18
+    def __lt__(self, value): return Condition(lambda x: x[self.name] < value) # F('age') < 18
+    def not_null(self): return Condition(lambda x: x.get(self.name) is not None) # F('email').not_null()
+    def is_null(self): return Condition(lambda x: x.get(self.name) is None) # F('email').is_null()
 
 
-# %% ../nbs/00_core.ipynb #a10f1e4f
+# %% ../nbs/00_core.ipynb #444db258
 def read_csv(path):
     with open(path) as f:
         reader = csv.DictReader(f)
@@ -105,8 +115,13 @@ def read_sqlite3(db_path, query):
         for row in cursor: yield dict(zip(cols, row))
 
 
-# %% ../nbs/00_core.ipynb #e1079d3a
+# %% ../nbs/00_core.ipynb #91e7b30a
 class Query:
+    """The main lazy query pipeline. Chain operations and execute only when needed.
+    
+    Example:
+        Query.from_csv('data.csv').filter(F('age') > 18).select('name').collect()
+    """
     def __init__(self, data, operations=None):
         self.data = data
         self.operations = operations or []
@@ -159,9 +174,24 @@ class Query:
     def from_sqlite_query(cls, db_path, query): return cls(lambda: read_sqlite3(db_path, query))
 
 class GroupedQuery(Query):
+    """A query pipeline for grouped data, returned by groupby().
+    
+    Example:
+        Query.from_csv('data.csv').groupby('country').count().collect()
+    """
     def __init__(self, data, operations=None): super().__init__(data, operations)
+    # Count items in each group
     def count(self): return Query(self.data, self.operations + [Op(lambda: Map(lambda g: (g[0], len(g[1]))), 'count')])
+    # Sum a field across each group
     def sum(self, field): return Query(self.data, self.operations + [Op(lambda: Map(lambda g: (g[0], sum(int(i[field]) for i in g[1]))), 'sum')])
+    # Take first n items from each group
     def take(self, n): return GroupedQuery(self.data, self.operations + [Op(lambda: Map(lambda g: (g[0], g[1][:n])), f"take({n})")])
+    # Apply fn to each (key, items) group
     def map(self, fn): return GroupedQuery(self.data, self.operations + [Op(lambda: Map(fn), 'map')])
+    def max(self, field=None):
+        if field is None: return Query.max()
+        else: return self.map(lambda g: (g[0], max(g[1], key=lambda x: x[field])))
+    def min(self, field=None):
+        if field is None: return Query.min()
+        else: return self.map(lambda g: (g[0], min(g[1], key=lambda x: x[field])))
 

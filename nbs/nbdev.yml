@@ -4,6 +4,6 @@ project:
 website:
   title: "lazyq"
   site-url: "https://vikasAWA.github.io/lazyq"
-  description: ""
+  description: "A lightweight, chainable query pipeline for Python"
   repo-branch: main
   repo-url: "https://github.com/vikasAWA/lazyq"
