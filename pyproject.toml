@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "A lightweight, chainable query pipeline for Python"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "Apache-2.0"}
+license = "Apache-2.0"
 authors = [{name = "vikasAWA", email = "awasthivikas02@gmail.com"}]
 keywords = ['nbdev']
 classifiers = [
