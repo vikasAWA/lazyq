@@ -176,15 +176,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">Documentation</a></li>
   </ul></li>
   <li><a href="#how-to-use" id="toc-how-to-use" class="nav-link" data-scroll-target="#how-to-use">How to use</a></li>
-  <li><a href="#usage-1" id="toc-usage-1" class="nav-link" data-scroll-target="#usage-1">Usage</a>
+  <li><a href="#usage-1" id="toc-usage-1" class="nav-link" data-scroll-target="#usage-1">Usage</a></li>
+  <li><a href="#exploring-with-a-list-of-dicts" id="toc-exploring-with-a-list-of-dicts" class="nav-link" data-scroll-target="#exploring-with-a-list-of-dicts">Exploring with a list of dicts</a>
   <ul class="collapse">
-  <li><a href="#exploring-with-a-list-of-dicts" id="toc-exploring-with-a-list-of-dicts" class="nav-link" data-scroll-target="#exploring-with-a-list-of-dicts">Exploring with a list of dicts</a></li>
   <li><a href="#query-1-lets-just-get-all-country-names." id="toc-query-1-lets-just-get-all-country-names." class="nav-link" data-scroll-target="#query-1-lets-just-get-all-country-names."><strong>Query 1:</strong> Let’s just get all country names.</a></li>
   <li><a href="#query-2-which-continents-have-more-than-one-country-in-our-list" id="toc-query-2-which-continents-have-more-than-one-country-in-our-list" class="nav-link" data-scroll-target="#query-2-which-continents-have-more-than-one-country-in-our-list"><strong>Query 2:</strong> Which continents have more than one country in our list?</a></li>
   <li><a href="#query-3-top-3-richest-countries-by-gdp" id="toc-query-3-top-3-richest-countries-by-gdp" class="nav-link" data-scroll-target="#query-3-top-3-richest-countries-by-gdp"><strong>Query 3:</strong> Top 3 richest countries by GDP</a></li>
   <li><a href="#query-4-countries-with-population-over-200-million" id="toc-query-4-countries-with-population-over-200-million" class="nav-link" data-scroll-target="#query-4-countries-with-population-over-200-million"><strong>Query 4:</strong> Countries with population over 200 million</a></li>
   <li><a href="#query-5-total-population-per-continent" id="toc-query-5-total-population-per-continent" class="nav-link" data-scroll-target="#query-5-total-population-per-continent"><strong>Query 5:</strong> Total Population per Continent</a></li>
   <li><a href="#query-6-largest-country-by-area-in-each-continent" id="toc-query-6-largest-country-by-area-in-each-continent" class="nav-link" data-scroll-target="#query-6-largest-country-by-area-in-each-continent"><strong>Query 6:</strong> Largest Country by Area in Each Continent</a></li>
+  </ul></li>
+  <li><a href="#cs50-language-popularity-survey-csv" id="toc-cs50-language-popularity-survey-csv" class="nav-link" data-scroll-target="#cs50-language-popularity-survey-csv">🐍 CS50 Language Popularity Survey CSV</a>
+  <ul class="collapse">
+  <li><a href="#how-many-people-use-python-vs-other-languages" id="toc-how-many-people-use-python-vs-other-languages" class="nav-link" data-scroll-target="#how-many-people-use-python-vs-other-languages">How many people use Python vs other languages?</a></li>
+  <li><a href="#most-common-problem" id="toc-most-common-problem" class="nav-link" data-scroll-target="#most-common-problem">Most Common Problem</a></li>
+  <li><a href="#filter-by-language" id="toc-filter-by-language" class="nav-link" data-scroll-target="#filter-by-language">Filter by Language</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/vikasAWA/lazyq/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div><div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.md"><i class="bi bi-file-code"></i>CommonMark</a></li></ul></div></nav>
@@ -223,10 +229,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="usage-1" class="level2">
 <h2 class="anchored" data-anchor-id="usage-1">Usage</h2>
 <p>lazyq lets you build queries step by step. Let’s explore with some country data!</p>
-<section id="exploring-with-a-list-of-dicts" class="level3">
-<h3 class="anchored" data-anchor-id="exploring-with-a-list-of-dicts">Exploring with a list of dicts</h3>
+</section>
+<section id="exploring-with-a-list-of-dicts" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-with-a-list-of-dicts">Exploring with a list of dicts</h2>
 <p>Let’s start simple — here’s a list of countries. We’ll use <a href="https://vikasAWA.github.io/lazyq/core.html#query.from_iterable"><code>Query.from_iterable()</code></a> to wrap it.</p>
-<div id="f41f878f" class="cell" data-execution_count="2">
+<div id="9903c237" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lazyq <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> [</span>
@@ -242,10 +249,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Canada"</span>, <span class="st">"continent"</span>: <span class="st">"North America"</span>, <span class="st">"population"</span>: <span class="dv">38000000</span>, <span class="st">"gdp"</span>: <span class="dv">2140000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">9984670</span>},</span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
 <section id="query-1-lets-just-get-all-country-names." class="level3">
 <h3 class="anchored" data-anchor-id="query-1-lets-just-get-all-country-names."><strong>Query 1:</strong> Let’s just get all country names.</h3>
-<div id="920e6666" class="cell" data-execution_count="3">
+<div id="7d7a7f54" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the query - nothing runs yet!</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> Query.from_iterable(countries).select(<span class="st">'name'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(q) <span class="co"># shows the pipeline map</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -253,7 +259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>Query(select(name))</code></pre>
 </div>
 </div>
-<div id="a3541e4f" class="cell" data-execution_count="4">
+<div id="a19592fd" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lets run it</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>q.collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -269,7 +275,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  {'name': 'Canada'}]</code></pre>
 </div>
 </div>
-<div id="487f1769" class="cell" data-execution_count="5">
+<div id="551b6923" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or you can use show() also </span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>q.show() <span class="co"># by default will show 5 values only. You can pass no. as argument</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -284,14 +290,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="query-2-which-continents-have-more-than-one-country-in-our-list" class="level3">
 <h3 class="anchored" data-anchor-id="query-2-which-continents-have-more-than-one-country-in-our-list"><strong>Query 2:</strong> Which continents have more than one country in our list?</h3>
 <p>Let’s group countries by continent, count how many are in each group, then filter to only show continents with more than one country.</p>
-<div id="594b716f" class="cell" data-execution_count="6">
+<div id="41711a89" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> Query.from_iterable(countries)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>q</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>Query()</code></pre>
 </div>
 </div>
-<div id="ae50a712" class="cell" data-execution_count="7">
+<div id="9a1317e6" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first we can groupby continents</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).collect(<span class="dv">1</span>) <span class="co"># will show only 1 value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
@@ -308,7 +314,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     'area_km2': 9596960}])]</code></pre>
 </div>
 </div>
-<div id="0bfe7848" class="cell" data-execution_count="8">
+<div id="f58ef045" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can use count() to count the number of items in a group</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).count().collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -320,7 +326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  ('Oceania', 1)]</code></pre>
 </div>
 </div>
-<div id="f4aa8cd3" class="cell" data-execution_count="9">
+<div id="474f7f90" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># so to get the continents having more than 1 country we can use filter</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).count().<span class="bu">filter</span>(<span class="kw">lambda</span> x: x[<span class="dv">1</span>] <span class="op">&gt;</span> <span class="dv">1</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -334,7 +340,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="query-3-top-3-richest-countries-by-gdp" class="level3">
 <h3 class="anchored" data-anchor-id="query-3-top-3-richest-countries-by-gdp"><strong>Query 3:</strong> Top 3 richest countries by GDP</h3>
 <p>Let’s find the top 3 richest countries. We use <code>.sort()</code> to order by GDP (highest first), then <code>.collect(3)</code> to grab only the top 3 — all in one lazy chain!</p>
-<div id="05541928" class="cell" data-execution_count="10">
+<div id="4017e381" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>q.sort(<span class="st">'gdp'</span>, reverse<span class="op">=</span><span class="va">True</span>).collect(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>[{'name': 'USA',
@@ -354,7 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   'area_km2': 357114}]</code></pre>
 </div>
 </div>
-<div id="3a34b91e" class="cell" data-execution_count="11">
+<div id="95b4d3e5" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you want to just select a particular key only. Use select()</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>q.sort(<span class="st">'gdp'</span>, reverse<span class="op">=</span><span class="va">True</span>).select(<span class="st">'name'</span>).collect(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
@@ -365,7 +371,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="query-4-countries-with-population-over-200-million" class="level3">
 <h3 class="anchored" data-anchor-id="query-4-countries-with-population-over-200-million"><strong>Query 4:</strong> Countries with population over 200 million</h3>
 <p>We use <code>F('population')</code> to reference the population field and <code>&gt; 200_000_000</code> to build a condition. Only countries matching it pass through the filter!</p>
-<div id="a1196a8c" class="cell" data-execution_count="12">
+<div id="02258fa1" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>q.<span class="bu">filter</span>(F(<span class="st">'population'</span>) <span class="op">&gt;</span> <span class="dv">200_000_000</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>[{'name': 'India',
@@ -399,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="query-5-total-population-per-continent" class="level3">
 <h3 class="anchored" data-anchor-id="query-5-total-population-per-continent"><strong>Query 5:</strong> Total Population per Continent</h3>
 <p>We use <code>.groupby()</code> to group countries by continent, then <code>.sum('population')</code> to add up the population in each group. Great for aggregating data!</p>
-<div id="4e279078" class="cell" data-execution_count="13">
+<div id="12619102" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).<span class="bu">sum</span>(<span class="st">'population'</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>[('Asia', 2853000000),
@@ -414,7 +420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="query-6-largest-country-by-area-in-each-continent" class="level3">
 <h3 class="anchored" data-anchor-id="query-6-largest-country-by-area-in-each-continent"><strong>Query 6:</strong> Largest Country by Area in Each Continent</h3>
 <p>We use <code>.groupby()</code> then <code>.max('area_km2')</code> to find the biggest country in each continent.</p>
-<div id="2c590e36" class="cell" data-execution_count="14">
+<div id="470cbec8" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).<span class="bu">max</span>(<span class="st">'area_km2'</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>[('Asia',
@@ -453,6 +459,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    'population': 26000000,
    'gdp': 1693000000000,
    'area_km2': 7692024})]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="cs50-language-popularity-survey-csv" class="level2">
+<h2 class="anchored" data-anchor-id="cs50-language-popularity-survey-csv">🐍 CS50 Language Popularity Survey CSV</h2>
+<p>Let’s load a CSV file and count how many respondents use each programming language.</p>
+<div id="9130cd6e" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>survey <span class="op">=</span> Query.from_csv(<span class="st">'../data/favorites.csv'</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>survey.collect(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>[{'Timestamp': '10/20/2025 9:45:26',
+  'language': 'Python',
+  'problem': 'Readability'},
+ {'Timestamp': '10/20/2025 10:08:03',
+  'language': 'Python',
+  'problem': 'Mario'}]</code></pre>
+</div>
+</div>
+<section id="how-many-people-use-python-vs-other-languages" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-people-use-python-vs-other-languages">How many people use Python vs other languages?</h3>
+<div id="eb61cda7" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>survey.groupby(<span class="st">'language'</span>).count().collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>[('Python', 190), ('Scratch', 24), ('C', 58)]</code></pre>
+</div>
+</div>
+</section>
+<section id="most-common-problem" class="level3">
+<h3 class="anchored" data-anchor-id="most-common-problem">Most Common Problem</h3>
+<p>Let’s find the most frequently mentioned problem using <code>groupby</code>, <code>count</code>, and <code>sort</code>!</p>
+<div id="dfc50220" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>survey.groupby(<span class="st">'problem'</span>).count().sort(<span class="dv">1</span>, reverse<span class="op">=</span><span class="va">True</span>).show(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>('Hello, World', 42)</code></pre>
+</div>
+</div>
+</section>
+<section id="filter-by-language" class="level3">
+<h3 class="anchored" data-anchor-id="filter-by-language">Filter by Language</h3>
+<p>Use <code>F('language') == 'C'</code> to filter only C programmers, then <code>select()</code> to pick specific fields.</p>
+<div id="8ad4b1ed" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>survey.<span class="bu">filter</span>(F(<span class="st">'language'</span>) <span class="op">==</span> <span class="st">'C'</span>).select([<span class="st">'language'</span>, <span class="st">'problem'</span>]).collect(<span class="dv">4</span>) <span class="co"># only showing 4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>[{'language': 'C', 'problem': 'Cash'},
+ {'language': 'C', 'problem': 'Filter'},
+ {'language': 'C', 'problem': 'DNA'},
+ {'language': 'C', 'problem': 'Speller'}]</code></pre>
 </div>
 </div>
 
