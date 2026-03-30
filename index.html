@@ -221,10 +221,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="installation">Installation</h3>
 <p>Install latest from the GitHub <a href="https://github.com/vikasAWA/lazyq">repository</a>:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install git+https://github.com/vikasAWA/lazyq.git</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>or from <a href="https://anaconda.org/vikasAWA/lazyq">conda</a></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> conda install <span class="at">-c</span> vikasAWA lazyq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>or from <a href="https://pypi.org/project/lazyq/">pypi</a></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install lazyq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> pip install lazyq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="documentation" class="level3">
 <h3 class="anchored" data-anchor-id="documentation">Documentation</h3>
@@ -241,35 +239,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="exploring-with-a-list-of-dicts" class="level2">
 <h2 class="anchored" data-anchor-id="exploring-with-a-list-of-dicts">Exploring with a list of dicts</h2>
 <p>Let’s start simple — here’s a list of countries. We’ll use <a href="https://vikasAWA.github.io/lazyq/core.html#query.from_iterable"><code>Query.from_iterable()</code></a> to wrap it.</p>
-<div id="4f2f018e" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lazyq <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> [</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"India"</span>, <span class="st">"continent"</span>: <span class="st">"Asia"</span>, <span class="st">"population"</span>: <span class="dv">1428000000</span>, <span class="st">"gdp"</span>: <span class="dv">3750000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">3287263</span>},</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"China"</span>, <span class="st">"continent"</span>: <span class="st">"Asia"</span>, <span class="st">"population"</span>: <span class="dv">1425000000</span>, <span class="st">"gdp"</span>: <span class="dv">17700000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">9596960</span>},</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"USA"</span>, <span class="st">"continent"</span>: <span class="st">"North America"</span>, <span class="st">"population"</span>: <span class="dv">331000000</span>, <span class="st">"gdp"</span>: <span class="dv">25460000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">9833517</span>},</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Brazil"</span>, <span class="st">"continent"</span>: <span class="st">"South America"</span>, <span class="st">"population"</span>: <span class="dv">215000000</span>, <span class="st">"gdp"</span>: <span class="dv">1920000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">8515767</span>},</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Nigeria"</span>, <span class="st">"continent"</span>: <span class="st">"Africa"</span>, <span class="st">"population"</span>: <span class="dv">218000000</span>, <span class="st">"gdp"</span>: <span class="dv">477000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">923768</span>},</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Germany"</span>, <span class="st">"continent"</span>: <span class="st">"Europe"</span>, <span class="st">"population"</span>: <span class="dv">84000000</span>, <span class="st">"gdp"</span>: <span class="dv">4070000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">357114</span>},</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Australia"</span>, <span class="st">"continent"</span>: <span class="st">"Oceania"</span>, <span class="st">"population"</span>: <span class="dv">26000000</span>, <span class="st">"gdp"</span>: <span class="dv">1693000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">7692024</span>},</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Egypt"</span>, <span class="st">"continent"</span>: <span class="st">"Africa"</span>, <span class="st">"population"</span>: <span class="dv">105000000</span>, <span class="st">"gdp"</span>: <span class="dv">387000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">1002450</span>},</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"France"</span>, <span class="st">"continent"</span>: <span class="st">"Europe"</span>, <span class="st">"population"</span>: <span class="dv">68000000</span>, <span class="st">"gdp"</span>: <span class="dv">2780000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">551695</span>},</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Canada"</span>, <span class="st">"continent"</span>: <span class="st">"North America"</span>, <span class="st">"population"</span>: <span class="dv">38000000</span>, <span class="st">"gdp"</span>: <span class="dv">2140000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">9984670</span>},</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="0929ba18" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> lazyq <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>countries <span class="op">=</span> [</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"India"</span>, <span class="st">"continent"</span>: <span class="st">"Asia"</span>, <span class="st">"population"</span>: <span class="dv">1428000000</span>, <span class="st">"gdp"</span>: <span class="dv">3750000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">3287263</span>},</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"China"</span>, <span class="st">"continent"</span>: <span class="st">"Asia"</span>, <span class="st">"population"</span>: <span class="dv">1425000000</span>, <span class="st">"gdp"</span>: <span class="dv">17700000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">9596960</span>},</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"USA"</span>, <span class="st">"continent"</span>: <span class="st">"North America"</span>, <span class="st">"population"</span>: <span class="dv">331000000</span>, <span class="st">"gdp"</span>: <span class="dv">25460000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">9833517</span>},</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Brazil"</span>, <span class="st">"continent"</span>: <span class="st">"South America"</span>, <span class="st">"population"</span>: <span class="dv">215000000</span>, <span class="st">"gdp"</span>: <span class="dv">1920000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">8515767</span>},</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Nigeria"</span>, <span class="st">"continent"</span>: <span class="st">"Africa"</span>, <span class="st">"population"</span>: <span class="dv">218000000</span>, <span class="st">"gdp"</span>: <span class="dv">477000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">923768</span>},</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Germany"</span>, <span class="st">"continent"</span>: <span class="st">"Europe"</span>, <span class="st">"population"</span>: <span class="dv">84000000</span>, <span class="st">"gdp"</span>: <span class="dv">4070000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">357114</span>},</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Australia"</span>, <span class="st">"continent"</span>: <span class="st">"Oceania"</span>, <span class="st">"population"</span>: <span class="dv">26000000</span>, <span class="st">"gdp"</span>: <span class="dv">1693000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">7692024</span>},</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Egypt"</span>, <span class="st">"continent"</span>: <span class="st">"Africa"</span>, <span class="st">"population"</span>: <span class="dv">105000000</span>, <span class="st">"gdp"</span>: <span class="dv">387000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">1002450</span>},</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"France"</span>, <span class="st">"continent"</span>: <span class="st">"Europe"</span>, <span class="st">"population"</span>: <span class="dv">68000000</span>, <span class="st">"gdp"</span>: <span class="dv">2780000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">551695</span>},</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    {<span class="st">"name"</span>: <span class="st">"Canada"</span>, <span class="st">"continent"</span>: <span class="st">"North America"</span>, <span class="st">"population"</span>: <span class="dv">38000000</span>, <span class="st">"gdp"</span>: <span class="dv">2140000000000</span>, <span class="st">"area_km2"</span>: <span class="dv">9984670</span>},</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="query-1-lets-just-get-all-country-names." class="level3">
 <h3 class="anchored" data-anchor-id="query-1-lets-just-get-all-country-names."><strong>Query 1:</strong> Let’s just get all country names.</h3>
-<div id="76d95a9b" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the query - nothing runs yet!</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> Query.from_iterable(countries).select(<span class="st">'name'</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(q) <span class="co"># shows the pipeline map</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="265059e4" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Build the query - nothing runs yet!</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> Query.from_iterable(countries).select(<span class="st">'name'</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(q) <span class="co"># shows the pipeline map</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Query(select(name))</code></pre>
 </div>
 </div>
-<div id="8f56848f" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lets run it</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>q.collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="b9805ec3" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lets run it</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>q.collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>[{'name': 'India'},
  {'name': 'China'},
@@ -283,9 +281,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  {'name': 'Canada'}]</code></pre>
 </div>
 </div>
-<div id="c8499b3b" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or you can use show() also </span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>q.show() <span class="co"># by default will show 5 values only. You can pass no. as argument</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6fd3dd8a" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># or you can use show() also </span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>q.show() <span class="co"># by default will show 5 values only. You can pass no. as argument</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{'name': 'India'}
 {'name': 'China'}
@@ -298,16 +296,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="query-2-which-continents-have-more-than-one-country-in-our-list" class="level3">
 <h3 class="anchored" data-anchor-id="query-2-which-continents-have-more-than-one-country-in-our-list"><strong>Query 2:</strong> Which continents have more than one country in our list?</h3>
 <p>Let’s group countries by continent, count how many are in each group, then filter to only show continents with more than one country.</p>
-<div id="8c078b9d" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> Query.from_iterable(countries)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>q</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="4bc03637" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> Query.from_iterable(countries)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>q</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>Query()</code></pre>
 </div>
 </div>
-<div id="2fb372fb" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first we can groupby continents</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).collect(<span class="dv">1</span>) <span class="co"># will show only 1 value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="9265dfa7" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># first we can groupby continents</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).collect(<span class="dv">1</span>) <span class="co"># will show only 1 value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>[('Asia',
   [{'name': 'India',
@@ -322,9 +320,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     'area_km2': 9596960}])]</code></pre>
 </div>
 </div>
-<div id="76f5c826" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can use count() to count the number of items in a group</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).count().collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="a00d0e61" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># we can use count() to count the number of items in a group</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).count().collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>[('Asia', 2),
  ('North America', 2),
@@ -334,9 +332,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  ('Oceania', 1)]</code></pre>
 </div>
 </div>
-<div id="c8170f48" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># so to get the continents having more than 1 country we can use filter</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).count().<span class="bu">filter</span>(<span class="kw">lambda</span> x: x[<span class="dv">1</span>] <span class="op">&gt;</span> <span class="dv">1</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="c7e20616" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># so to get the continents having more than 1 country we can use filter</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).count().<span class="bu">filter</span>(<span class="kw">lambda</span> x: x[<span class="dv">1</span>] <span class="op">&gt;</span> <span class="dv">1</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>('Asia', 2)
 ('North America', 2)
@@ -348,8 +346,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="query-3-top-3-richest-countries-by-gdp" class="level3">
 <h3 class="anchored" data-anchor-id="query-3-top-3-richest-countries-by-gdp"><strong>Query 3:</strong> Top 3 richest countries by GDP</h3>
 <p>Let’s find the top 3 richest countries. We use <code>.sort()</code> to order by GDP (highest first), then <code>.collect(3)</code> to grab only the top 3 — all in one lazy chain!</p>
-<div id="c70136a8" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>q.sort(<span class="st">'gdp'</span>, reverse<span class="op">=</span><span class="va">True</span>).collect(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e0938b9f" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>q.sort(<span class="st">'gdp'</span>, reverse<span class="op">=</span><span class="va">True</span>).collect(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>[{'name': 'USA',
   'continent': 'North America',
@@ -368,9 +366,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   'area_km2': 357114}]</code></pre>
 </div>
 </div>
-<div id="fd3cbfe2" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you want to just select a particular key only. Use select()</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>q.sort(<span class="st">'gdp'</span>, reverse<span class="op">=</span><span class="va">True</span>).select(<span class="st">'name'</span>).collect(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="0120ed7f" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If you want to just select a particular key only. Use select()</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>q.sort(<span class="st">'gdp'</span>, reverse<span class="op">=</span><span class="va">True</span>).select(<span class="st">'name'</span>).collect(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>[{'name': 'USA'}, {'name': 'China'}, {'name': 'Germany'}]</code></pre>
 </div>
@@ -379,8 +377,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="query-4-countries-with-population-over-200-million" class="level3">
 <h3 class="anchored" data-anchor-id="query-4-countries-with-population-over-200-million"><strong>Query 4:</strong> Countries with population over 200 million</h3>
 <p>We use <code>F('population')</code> to reference the population field and <code>&gt; 200_000_000</code> to build a condition. Only countries matching it pass through the filter!</p>
-<div id="c13900b7" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>q.<span class="bu">filter</span>(F(<span class="st">'population'</span>) <span class="op">&gt;</span> <span class="dv">200_000_000</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6a142796" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>q.<span class="bu">filter</span>(F(<span class="st">'population'</span>) <span class="op">&gt;</span> <span class="dv">200_000_000</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>[{'name': 'India',
   'continent': 'Asia',
@@ -413,8 +411,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="query-5-total-population-per-continent" class="level3">
 <h3 class="anchored" data-anchor-id="query-5-total-population-per-continent"><strong>Query 5:</strong> Total Population per Continent</h3>
 <p>We use <code>.groupby()</code> to group countries by continent, then <code>.sum('population')</code> to add up the population in each group. Great for aggregating data!</p>
-<div id="ffccef74" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).<span class="bu">sum</span>(<span class="st">'population'</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="f973db13" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).<span class="bu">sum</span>(<span class="st">'population'</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>[('Asia', 2853000000.0),
  ('North America', 369000000.0),
@@ -428,8 +426,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="query-6-largest-country-by-area-in-each-continent" class="level3">
 <h3 class="anchored" data-anchor-id="query-6-largest-country-by-area-in-each-continent"><strong>Query 6:</strong> Largest Country by Area in Each Continent</h3>
 <p>We use <code>.groupby()</code> then <code>.max('area_km2')</code> to find the biggest country in each continent.</p>
-<div id="e5711798" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).<span class="bu">max</span>(<span class="st">'area_km2'</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="bcd8fdb0" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>q.groupby(<span class="st">'continent'</span>).<span class="bu">max</span>(<span class="st">'area_km2'</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>[{'name': 'China',
   'continent': 'Asia',
@@ -468,9 +466,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="cs50-language-popularity-survey-csv" class="level2">
 <h2 class="anchored" data-anchor-id="cs50-language-popularity-survey-csv">🐍 CS50 Language Popularity Survey CSV</h2>
 <p>Let’s load a CSV file and count how many respondents use each programming language.</p>
-<div id="2ede02b3" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>survey <span class="op">=</span> Query.from_csv(<span class="st">'../data/favorites.csv'</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>survey.collect(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="d0349803" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>survey <span class="op">=</span> Query.from_csv(<span class="st">'../data/favorites.csv'</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>survey.collect(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>[{'Timestamp': '10/20/2025 9:45:26',
   'language': 'Python',
@@ -482,8 +480,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="how-many-people-use-python-vs-other-languages" class="level3">
 <h3 class="anchored" data-anchor-id="how-many-people-use-python-vs-other-languages">How many people use Python vs other languages?</h3>
-<div id="fabf642e" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>survey.groupby(<span class="st">'language'</span>).count().collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e773cf56" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>survey.groupby(<span class="st">'language'</span>).count().collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>[('Python', 190), ('Scratch', 24), ('C', 58)]</code></pre>
 </div>
@@ -492,8 +490,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="most-common-problem" class="level3">
 <h3 class="anchored" data-anchor-id="most-common-problem">Most Common Problem</h3>
 <p>Let’s find the most frequently mentioned problem using <code>groupby</code>, <code>count</code>, and <code>sort</code>!</p>
-<div id="b8366953" class="cell" data-execution_count="17">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>survey.groupby(<span class="st">'problem'</span>).count().sort(<span class="dv">1</span>, reverse<span class="op">=</span><span class="va">True</span>).show(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1dd9627a" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>survey.groupby(<span class="st">'problem'</span>).count().sort(<span class="dv">1</span>, reverse<span class="op">=</span><span class="va">True</span>).show(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>('Hello, World', 42)</code></pre>
 </div>
@@ -502,8 +500,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="filter-by-language" class="level3">
 <h3 class="anchored" data-anchor-id="filter-by-language">Filter by Language</h3>
 <p>Use <code>F('language') == 'C'</code> to filter only C programmers, then <code>select()</code> to pick specific fields.</p>
-<div id="5447ce49" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>survey.<span class="bu">filter</span>(F(<span class="st">'language'</span>) <span class="op">==</span> <span class="st">'C'</span>).select([<span class="st">'language'</span>, <span class="st">'problem'</span>]).collect(<span class="dv">4</span>) <span class="co"># only showing 4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6d96c19b" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>survey.<span class="bu">filter</span>(F(<span class="st">'language'</span>) <span class="op">==</span> <span class="st">'C'</span>).select([<span class="st">'language'</span>, <span class="st">'problem'</span>]).collect(<span class="dv">4</span>) <span class="co"># only showing 4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>[{'language': 'C', 'problem': 'Cash'},
  {'language': 'C', 'problem': 'Filter'},
@@ -518,11 +516,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>lazyq can connect directly to a SQLite database. Use <a href="https://vikasAWA.github.io/lazyq/core.html#query.from_sqlite"><code>Query.from_sqlite()</code></a> to load a table, or <a href="https://vikasAWA.github.io/lazyq/core.html#query.from_sqlite_query"><code>Query.from_sqlite_query()</code></a> to run a custom SQL query and then chain lazyq operations on the result.</p>
 <section id="imdb-shows" class="level3">
 <h3 class="anchored" data-anchor-id="imdb-shows">IMDB shows</h3>
-<div id="ae5bed66" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>shows_db <span class="op">=</span> Query.from_sqlite(<span class="st">'../data/shows.db'</span>, table<span class="op">=</span><span class="st">'shows'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="23e78f90" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>shows_db <span class="op">=</span> Query.from_sqlite(<span class="st">'../data/shows.db'</span>, table<span class="op">=</span><span class="st">'shows'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="96f78996" class="cell" data-execution_count="20">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>shows_db.collect(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="25024dc8" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>shows_db.collect(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>[{'id': 62614, 'title': "Zeg 'ns Aaa", 'year': 1981, 'episodes': 227},
  {'id': 63881, 'title': 'Catweazle', 'year': 1970, 'episodes': 26},
@@ -533,9 +531,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="explore-available-tables" class="level3">
 <h3 class="anchored" data-anchor-id="explore-available-tables">Explore Available Tables</h3>
 <p>Use <code>from_sqlite_query()</code> with a metadata query to list all tables in your SQLite database!</p>
-<div id="012a0157" class="cell" data-execution_count="26">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>tables <span class="op">=</span> Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"SELECT name FROM sqlite_master WHERE type='table'"</span>).collect()</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>tables</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="0ec780cf" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>tables <span class="op">=</span> Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"SELECT name FROM sqlite_master WHERE type='table'"</span>).collect()</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>tables</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="26">
 <pre><code>[{'name': 'genres'},
  {'name': 'people'},
@@ -549,8 +547,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="top-5-shows-with-most-episodes" class="level3">
 <h3 class="anchored" data-anchor-id="top-5-shows-with-most-episodes">Top 5 Shows with Most Episodes</h3>
 <p>Load from SQLite, drop null episodes, sort and select only the fields we need.</p>
-<div id="2e037090" class="cell" data-execution_count="22">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>shows_db.dropna(<span class="st">'episodes'</span>).sort(<span class="st">'episodes'</span>, reverse<span class="op">=</span><span class="va">True</span>).select([<span class="st">'title'</span>, <span class="st">'episodes'</span>]).collect(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e994a634" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>shows_db.dropna(<span class="st">'episodes'</span>).sort(<span class="st">'episodes'</span>, reverse<span class="op">=</span><span class="va">True</span>).select([<span class="st">'title'</span>, <span class="st">'episodes'</span>]).collect(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>[{'title': 'NRK Nyheter', 'episodes': 18593},
  {'title': 'The Young and the Restless', 'episodes': 13297},
@@ -563,11 +561,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="top-5-highest-rated-shows" class="level3">
 <h3 class="anchored" data-anchor-id="top-5-highest-rated-shows">Top 5 Highest Rated Shows</h3>
 <p>Use <code>from_sqlite_query()</code> to JOIN tables in SQL, then chain lazyq operations on the result!</p>
-<div id="6629c9a8" class="cell" data-execution_count="24">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"""</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT shows.title, ratings.rating</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM shows JOIN ratings ON shows.id = ratings.show_id</span></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).sort(<span class="st">'rating'</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">5</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ab490051" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"""</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT shows.title, ratings.rating</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM shows JOIN ratings ON shows.id = ratings.show_id</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).sort(<span class="st">'rating'</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">5</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="24">
 <pre><code>[{'title': 'Peanut Headz: Black History Toonz', 'rating': 10.0},
  {'title': 'Quase Anjos: Edição Especial', 'rating': 10.0},
@@ -580,8 +578,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="filter-shows-by-year" class="level3">
 <h3 class="anchored" data-anchor-id="filter-shows-by-year">Filter Shows by Year</h3>
 <p>Use <code>F('year') == 1970</code> to filter shows from a specific year directly from SQLite!</p>
-<div id="963eebfe" class="cell" data-execution_count="25">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>shows_db.<span class="bu">filter</span>(F(<span class="st">'year'</span>) <span class="op">==</span> <span class="dv">1970</span>).select([<span class="st">'title'</span>, <span class="st">'year'</span>]).collect(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="9c616864" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>shows_db.<span class="bu">filter</span>(F(<span class="st">'year'</span>) <span class="op">==</span> <span class="dv">1970</span>).select([<span class="st">'title'</span>, <span class="st">'year'</span>]).collect(<span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="25">
 <pre><code>[{'title': 'Catweazle', 'year': 1970},
  {'title': 'UFO', 'year': 1970},

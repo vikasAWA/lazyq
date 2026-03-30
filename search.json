@@ -34,7 +34,7 @@
     "href": "index.html#usage",
     "title": "lazyq",
     "section": "Usage",
-    "text": "Usage\n\nInstallation\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/vikasAWA/lazyq.git\nor from conda\n$ conda install -c vikasAWA lazyq\nor from pypi\n$ pip install lazyq\n\n\nDocumentation\nDocumentation can be found hosted on this GitHub repository’s pages. Additionally you can find package manager specific guidelines on conda and pypi respectively.",
+    "text": "Usage\n\nInstallation\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/vikasAWA/lazyq.git\nor from pypi\n$ pip install lazyq\n\n\nDocumentation\nDocumentation can be found hosted on this GitHub repository’s pages. Additionally you can find package manager specific guidelines on conda and pypi respectively.",
     "crumbs": [
       "What is lazyq?"
     ]
