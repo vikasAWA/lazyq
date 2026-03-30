@@ -22,12 +22,6 @@ Install latest from the GitHub
 $ pip install git+https://github.com/vikasAWA/lazyq.git
 ```
 
-or from [conda](https://anaconda.org/vikasAWA/lazyq)
-
-``` sh
-$ conda install -c vikasAWA lazyq
-```
-
 or from [pypi](https://pypi.org/project/lazyq/)
 
 ``` sh
