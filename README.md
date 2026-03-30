@@ -240,12 +240,12 @@ aggregating data!
 q.groupby('continent').sum('population').collect()
 ```
 
-    [('Asia', 2853000000),
-     ('North America', 369000000),
-     ('South America', 215000000),
-     ('Africa', 323000000),
-     ('Europe', 152000000),
-     ('Oceania', 26000000)]
+    [('Asia', 2853000000.0),
+     ('North America', 369000000.0),
+     ('South America', 215000000.0),
+     ('Africa', 323000000.0),
+     ('Europe', 152000000.0),
+     ('Oceania', 26000000.0)]
 
 ### **Query 6:** Largest Country by Area in Each Continent
 
@@ -256,42 +256,36 @@ in each continent.
 q.groupby('continent').max('area_km2').collect()
 ```
 
-    [('Asia',
-      {'name': 'China',
-       'continent': 'Asia',
-       'population': 1425000000,
-       'gdp': 17700000000000,
-       'area_km2': 9596960}),
-     ('North America',
-      {'name': 'Canada',
-       'continent': 'North America',
-       'population': 38000000,
-       'gdp': 2140000000000,
-       'area_km2': 9984670}),
-     ('South America',
-      {'name': 'Brazil',
-       'continent': 'South America',
-       'population': 215000000,
-       'gdp': 1920000000000,
-       'area_km2': 8515767}),
-     ('Africa',
-      {'name': 'Egypt',
-       'continent': 'Africa',
-       'population': 105000000,
-       'gdp': 387000000000,
-       'area_km2': 1002450}),
-     ('Europe',
-      {'name': 'France',
-       'continent': 'Europe',
-       'population': 68000000,
-       'gdp': 2780000000000,
-       'area_km2': 551695}),
-     ('Oceania',
-      {'name': 'Australia',
-       'continent': 'Oceania',
-       'population': 26000000,
-       'gdp': 1693000000000,
-       'area_km2': 7692024})]
+    [{'name': 'China',
+      'continent': 'Asia',
+      'population': 1425000000,
+      'gdp': 17700000000000,
+      'area_km2': 9596960},
+     {'name': 'Canada',
+      'continent': 'North America',
+      'population': 38000000,
+      'gdp': 2140000000000,
+      'area_km2': 9984670},
+     {'name': 'Brazil',
+      'continent': 'South America',
+      'population': 215000000,
+      'gdp': 1920000000000,
+      'area_km2': 8515767},
+     {'name': 'Egypt',
+      'continent': 'Africa',
+      'population': 105000000,
+      'gdp': 387000000000,
+      'area_km2': 1002450},
+     {'name': 'France',
+      'continent': 'Europe',
+      'population': 68000000,
+      'gdp': 2780000000000,
+      'area_km2': 551695},
+     {'name': 'Australia',
+      'continent': 'Oceania',
+      'population': 26000000,
+      'gdp': 1693000000000,
+      'area_km2': 7692024}]
 
 ## 🐍 CS50 Language Popularity Survey CSV
 
@@ -342,3 +336,90 @@ survey.filter(F('language') == 'C').select(['language', 'problem']).collect(4) #
      {'language': 'C', 'problem': 'Filter'},
      {'language': 'C', 'problem': 'DNA'},
      {'language': 'C', 'problem': 'Speller'}]
+
+## Working with SQLite
+
+lazyq can connect directly to a SQLite database. Use
+[`Query.from_sqlite()`](https://vikasAWA.github.io/lazyq/core.html#query.from_sqlite)
+to load a table, or
+[`Query.from_sqlite_query()`](https://vikasAWA.github.io/lazyq/core.html#query.from_sqlite_query)
+to run a custom SQL query and then chain lazyq operations on the result.
+
+### IMDB shows
+
+``` python
+shows_db = Query.from_sqlite('../data/shows.db', table='shows')
+```
+
+``` python
+shows_db.collect(3)
+```
+
+    [{'id': 62614, 'title': "Zeg 'ns Aaa", 'year': 1981, 'episodes': 227},
+     {'id': 63881, 'title': 'Catweazle', 'year': 1970, 'episodes': 26},
+     {'id': 63962, 'title': 'UFO', 'year': 1970, 'episodes': 26}]
+
+### Explore Available Tables
+
+Use `from_sqlite_query()` with a metadata query to list all tables in
+your SQLite database!
+
+``` python
+tables = Query.from_sqlite_query('../data/shows.db', "SELECT name FROM sqlite_master WHERE type='table'").collect()
+tables
+```
+
+    [{'name': 'genres'},
+     {'name': 'people'},
+     {'name': 'ratings'},
+     {'name': 'shows'},
+     {'name': 'stars'},
+     {'name': 'writers'}]
+
+### Top 5 Shows with Most Episodes
+
+Load from SQLite, drop null episodes, sort and select only the fields we
+need.
+
+``` python
+shows_db.dropna('episodes').sort('episodes', reverse=True).select(['title', 'episodes']).collect(5)
+```
+
+    [{'title': 'NRK Nyheter', 'episodes': 18593},
+     {'title': 'The Young and the Restless', 'episodes': 13297},
+     {'title': 'See the World by Train', 'episodes': 10674},
+     {'title': 'WREG News 3 at 10PM', 'episodes': 10663},
+     {'title': 'Barátok közt', 'episodes': 10456}]
+
+### Top 5 Highest Rated Shows
+
+Use `from_sqlite_query()` to JOIN tables in SQL, then chain lazyq
+operations on the result!
+
+``` python
+Query.from_sqlite_query('../data/shows.db', """
+    SELECT shows.title, ratings.rating
+    FROM shows JOIN ratings ON shows.id = ratings.show_id
+""").sort('rating', reverse=True).limit(5).collect()
+```
+
+    [{'title': 'Peanut Headz: Black History Toonz', 'rating': 10.0},
+     {'title': 'Quase Anjos: Edição Especial', 'rating': 10.0},
+     {'title': 'Living with Siblings', 'rating': 10.0},
+     {'title': 'DIY Science Time', 'rating': 10.0},
+     {'title': 'The Show with the Campervan', 'rating': 9.9}]
+
+### Filter Shows by Year
+
+Use `F('year') == 1970` to filter shows from a specific year directly
+from SQLite!
+
+``` python
+shows_db.filter(F('year') == 1970).select(['title', 'year']).collect(5)
+```
+
+    [{'title': 'Catweazle', 'year': 1970},
+     {'title': 'UFO', 'year': 1970},
+     {'title': 'Ace of Wands', 'year': 1970},
+     {'title': 'The Adventures of Don Quick', 'year': 1970},
+     {'title': 'Albert and Victoria', 'year': 1970}]
