@@ -6,15 +6,15 @@
 __all__ = ['SKIP', 'STOP', 'Op', 'Map', 'Filter', 'Limit', 'Select', 'GroupBy', 'Reduce', 'Sort', 'Condition', 'F', 'read_csv',
            'read_sqlite3', 'Query', 'GroupedQuery']
 
-# %% ../nbs/00_core.ipynb #01daa1c1
+# %% ../nbs/00_core.ipynb #fe8354a4
 import csv
 import sqlite3
 
-# %% ../nbs/00_core.ipynb #7eff0667
+# %% ../nbs/00_core.ipynb #fe7e2b29
 SKIP = object()  # Sentinel: skip this item in the pipeline
 STOP = object() # Sentinel: stop the pipeline immediately
 
-# %% ../nbs/00_core.ipynb #ca6f5d18
+# %% ../nbs/00_core.ipynb #5ae7fa3e
 class Op:
     """Wraps a factory function and a name to lazily create pipeline operations."""
     def __init__(self, factory, name):
@@ -22,7 +22,7 @@ class Op:
         self.factory = factory
     def __call__(self): return self.factory()
 
-# %% ../nbs/00_core.ipynb #b2bfac9f
+# %% ../nbs/00_core.ipynb #1596ac91
 class Map:
     """Applies a function to each item in the pipeline."""
     def __init__(self, fn): self.fn = fn
@@ -84,7 +84,7 @@ class Sort:
         return sorted(data, key=lambda item: item[self.key] if isinstance(item, dict) else item[self.key], reverse=self.reverse)
 
 
-# %% ../nbs/00_core.ipynb #5a5a5198
+# %% ../nbs/00_core.ipynb #4e8a32e4
 class Condition:
     """A composable condition that can be combined with & for filtering."""
     def __init__(self, fn): self.fn = fn
@@ -101,7 +101,7 @@ class F:
     def is_null(self): return Condition(lambda x: x.get(self.name) is None) # F('email').is_null()
 
 
-# %% ../nbs/00_core.ipynb #8360bf55
+# %% ../nbs/00_core.ipynb #40ce8f9d
 def read_csv(path):
     with open(path) as f:
         reader = csv.DictReader(f)
@@ -115,7 +115,7 @@ def read_sqlite3(db_path, query):
         for row in cursor: yield dict(zip(cols, row))
 
 
-# %% ../nbs/00_core.ipynb #16ace099
+# %% ../nbs/00_core.ipynb #e5507989
 class Query:
     """The main lazy query pipeline. Chain operations and execute only when needed.
     
@@ -134,6 +134,11 @@ class Query:
     def sort(self, key, reverse=False):
         name = f'sort({key}, desc)' if reverse else f'sort({key})'
         return Query(self.data, self.operations + [Op(lambda: Sort(key, reverse), name)])
+    def dropna(self, key=None):
+        if key is None: return self.filter(lambda x: x != None)
+        else: return self.filter(F(key).not_null())
+    def fillna(self, key, value): 
+        return self.map(lambda x: {**x, key: x[key] if x[key] is not None else value})
     def sum(self): return Query(self.data, self.operations + [Op(lambda: Reduce(lambda acc, x: acc + x), 'sum')])
     def count(self): return Query(self.data, self.operations + [Op(lambda: Reduce(lambda acc, _: acc + 1, 0), 'count')])
     def min(self): return Query(self.data, self.operations + [Op(lambda: Reduce(lambda acc, x: x if x < acc else acc), 'min')])
@@ -183,15 +188,11 @@ class GroupedQuery(Query):
     # Count items in each group
     def count(self): return Query(self.data, self.operations + [Op(lambda: Map(lambda g: (g[0], len(g[1]))), 'count')])
     # Sum a field across each group
-    def sum(self, field): return Query(self.data, self.operations + [Op(lambda: Map(lambda g: (g[0], sum(int(i[field]) for i in g[1]))), 'sum')])
+    def sum(self, field): return Query(self.data, self.operations + [Op(lambda: Map(lambda g: (g[0], sum(float(i[field]) for i in g[1]))), 'sum')])
     # Take first n items from each group
     def take(self, n): return GroupedQuery(self.data, self.operations + [Op(lambda: Map(lambda g: (g[0], g[1][:n])), f"take({n})")])
     # Apply fn to each (key, items) group
     def map(self, fn): return GroupedQuery(self.data, self.operations + [Op(lambda: Map(fn), 'map')])
-    def max(self, field=None):
-        if field is None: return Query.max()
-        else: return self.map(lambda g: (g[0], max(g[1], key=lambda x: x[field])))
-    def min(self, field=None):
-        if field is None: return Query.min()
-        else: return self.map(lambda g: (g[0], min(g[1], key=lambda x: x[field])))
+    def max(self, field):return self.map(lambda g: max(g[1], key=lambda x: x[field]))
+    def min(self, field):return self.map(lambda g: min(g[1], key=lambda x: x[field]))
 

@@ -50,7 +50,7 @@ package manager specific guidelines on
 lazyq lets you build queries step by step. Let’s explore with some
 country data!
 
-### Exploring with a list of dicts
+## Exploring with a list of dicts
 
 Let’s start simple — here’s a list of countries. We’ll use
 [`Query.from_iterable()`](https://vikasAWA.github.io/lazyq/core.html#query.from_iterable)
@@ -292,3 +292,53 @@ q.groupby('continent').max('area_km2').collect()
        'population': 26000000,
        'gdp': 1693000000000,
        'area_km2': 7692024})]
+
+## 🐍 CS50 Language Popularity Survey CSV
+
+Let’s load a CSV file and count how many respondents use each
+programming language.
+
+``` python
+survey = Query.from_csv('../data/favorites.csv')
+survey.collect(2)
+```
+
+    [{'Timestamp': '10/20/2025 9:45:26',
+      'language': 'Python',
+      'problem': 'Readability'},
+     {'Timestamp': '10/20/2025 10:08:03',
+      'language': 'Python',
+      'problem': 'Mario'}]
+
+### How many people use Python vs other languages?
+
+``` python
+survey.groupby('language').count().collect()
+```
+
+    [('Python', 190), ('Scratch', 24), ('C', 58)]
+
+### Most Common Problem
+
+Let’s find the most frequently mentioned problem using `groupby`,
+`count`, and `sort`!
+
+``` python
+survey.groupby('problem').count().sort(1, reverse=True).show(1)
+```
+
+    ('Hello, World', 42)
+
+### Filter by Language
+
+Use `F('language') == 'C'` to filter only C programmers, then `select()`
+to pick specific fields.
+
+``` python
+survey.filter(F('language') == 'C').select(['language', 'problem']).collect(4) # only showing 4
+```
+
+    [{'language': 'C', 'problem': 'Cash'},
+     {'language': 'C', 'problem': 'Filter'},
+     {'language': 'C', 'problem': 'DNA'},
+     {'language': 'C', 'problem': 'Speller'}]
