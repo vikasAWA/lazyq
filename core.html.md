@@ -206,7 +206,7 @@ def read_csv(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L176"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L181"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### GroupedQuery
