@@ -5,178 +5,86 @@
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L18"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L267"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
-### Op
+### GroupedQuery
 
 ``` python
 
-def Op(
-    factory, name
+def GroupedQuery(
+    data, operations
 ):
 
 ```
 
-*Wraps a factory function and a name to lazily create pipeline
-operations.*
+*Initialize self. See help(type(self)) for accurate signature.*
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L78"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L135"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
-### Sort
+### Query
 
 ``` python
 
-def Sort(
-    key, reverse:bool=False
+def Query(
+    data, operations:NoneType=None
 ):
 
 ```
 
-*Sorts all items by a key, optionally in reverse order.*
+*Initialize self. See help(type(self)) for accurate signature.*
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L64"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L126"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
-### Reduce
+### read_excel
 
 ``` python
 
-def Reduce(
-    fn, initial:NoneType=None
+def read_excel(
+    path, sheet_name:NoneType=None
 ):
 
 ```
-
-*Reduces all items to a single value using fn.*
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L53"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L115"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
-### GroupBy
+### read_yaml
 
 ``` python
 
-def GroupBy(
-    key
+def read_yaml(
+    path, key:NoneType=None
 ):
 
 ```
-
-*Groups items by a key, returning (key, \[items\]) pairs.*
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L48"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L101"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
-### Select
+### read_json
 
 ``` python
 
-def Select(
-    keys
+def read_json(
+    path, key:NoneType=None, stream:bool=False
 ):
 
 ```
-
-*Returns only the specified keys from each dict item.*
-
-------------------------------------------------------------------------
-
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L38"
-target="_blank" style="float:right; font-size:smaller">source</a>
-
-### Limit
-
-``` python
-
-def Limit(
-    n
-):
-
-```
-
-*Stops the pipeline after n items.*
-
-------------------------------------------------------------------------
-
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L31"
-target="_blank" style="float:right; font-size:smaller">source</a>
-
-### Filter
-
-``` python
-
-def Filter(
-    fn
-):
-
-```
-
-*Keeps items where fn(item) is True, skips the rest.*
-
-------------------------------------------------------------------------
-
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L26"
-target="_blank" style="float:right; font-size:smaller">source</a>
-
-### Map
-
-``` python
-
-def Map(
-    fn
-):
-
-```
-
-*Applies a function to each item in the pipeline.*
 
 ------------------------------------------------------------------------
 
 <a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L94"
-target="_blank" style="float:right; font-size:smaller">source</a>
-
-### F
-
-``` python
-
-def F(
-    name
-):
-
-```
-
-*A field reference used to build conditions. E.g. F(‘age’) \> 18*
-
-------------------------------------------------------------------------
-
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L88"
-target="_blank" style="float:right; font-size:smaller">source</a>
-
-### Condition
-
-``` python
-
-def Condition(
-    fn
-):
-
-```
-
-*A composable condition that can be combined with & for filtering.*
-
-------------------------------------------------------------------------
-
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L110"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### read_sqlite3
@@ -191,7 +99,7 @@ def read_sqlite3(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L105"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L90"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### read_csv
@@ -206,40 +114,153 @@ def read_csv(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L181"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L76"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
-### GroupedQuery
+### F
 
 ``` python
 
-def GroupedQuery(
-    data, operations:NoneType=None
+def F(
+    name
 ):
 
 ```
 
-*A query pipeline for grouped data, returned by groupby().*
-
-Example: Query.from_csv(‘data.csv’).groupby(‘country’).count().collect()
+*Initialize self. See help(type(self)) for accurate signature.*
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L119"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L70"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
-### Query
+### Condition
 
 ``` python
 
-def Query(
-    data, operations:NoneType=None
+def Condition(
+    fn
 ):
 
 ```
 
-*The main lazy query pipeline. Chain operations and execute only when
-needed.*
+*Initialize self. See help(type(self)) for accurate signature.*
 
-Example: Query.from_csv(‘data.csv’).filter(F(‘age’) \>
-18).select(‘name’).collect()
+------------------------------------------------------------------------
+
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L61"
+target="_blank" style="float:right; font-size:smaller">source</a>
+
+### Sort
+
+``` python
+
+def Sort(
+    key:NoneType=None, reverse:bool=False
+):
+
+```
+
+*Initialize self. See help(type(self)) for accurate signature.*
+
+------------------------------------------------------------------------
+
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L47"
+target="_blank" style="float:right; font-size:smaller">source</a>
+
+### Reduce
+
+``` python
+
+def Reduce(
+    fn, initial:NoneType=None
+):
+
+```
+
+*Initialize self. See help(type(self)) for accurate signature.*
+
+------------------------------------------------------------------------
+
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L37"
+target="_blank" style="float:right; font-size:smaller">source</a>
+
+### GroupBy
+
+``` python
+
+def GroupBy(
+    key
+):
+
+```
+
+*Initialize self. See help(type(self)) for accurate signature.*
+
+------------------------------------------------------------------------
+
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L33"
+target="_blank" style="float:right; font-size:smaller">source</a>
+
+### Select
+
+``` python
+
+def Select(
+    keys
+):
+
+```
+
+*Initialize self. See help(type(self)) for accurate signature.*
+
+------------------------------------------------------------------------
+
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L26"
+target="_blank" style="float:right; font-size:smaller">source</a>
+
+### Limit
+
+``` python
+
+def Limit(
+    n
+):
+
+```
+
+*Initialize self. See help(type(self)) for accurate signature.*
+
+------------------------------------------------------------------------
+
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L19"
+target="_blank" style="float:right; font-size:smaller">source</a>
+
+### Filter
+
+``` python
+
+def Filter(
+    fn
+):
+
+```
+
+*Initialize self. See help(type(self)) for accurate signature.*
+
+------------------------------------------------------------------------
+
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L15"
+target="_blank" style="float:right; font-size:smaller">source</a>
+
+### Map
+
+``` python
+
+def Map(
+    fn
+):
+
+```
+
+*Initialize self. See help(type(self)) for accurate signature.*
