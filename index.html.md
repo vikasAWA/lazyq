@@ -83,6 +83,91 @@ movies = [
 
 ## Examples
 
+**Listing all available Query operations**
+
+``` python
+Query.tools()
+```
+
+A convenience method that prints a formatted reference of all available
+[`Query`](https://vikasAWA.github.io/lazyq/core.html#query) operations,
+grouped by category:
+
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Category</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>📦 <strong>Data Sources</strong></td>
+<td>Methods to load data from iterables, CSV, SQLite, JSON, YAML, and
+Excel</td>
+</tr>
+<tr>
+<td>🔄 <strong>Transformations</strong></td>
+<td>Row-level operations: <code>map</code>, <code>filter</code>,
+<code>limit</code>, <code>sort</code>, <code>groupby</code></td>
+</tr>
+<tr>
+<td>📊 <strong>Aggregations</strong></td>
+<td>Summary operations: <code>sum</code>, <code>count</code>,
+<code>max</code>, <code>min</code></td>
+</tr>
+<tr>
+<td>📤 <strong>Output</strong></td>
+<td><code>collect</code> to get a list, <code>show</code> to
+pretty-print a table</td>
+</tr>
+</tbody>
+</table>
+
+> **Tip:** Run
+> [`Query.tools()`](https://vikasAWA.github.io/lazyq/core.html#query.tools)
+> any time you need a quick reminder of what’s available — no imports or
+> docs needed.
+
+``` python
+Query.tools()
+```
+
+
+    📦 Data Sources:
+
+    from_iterable(data)                 → Create Query from list/iterable
+    from_csv(path)                      → Load data from CSV file
+    from_sqlite(db, table)              → Load table from SQLite database
+    from_sqlite_query(db, query)        → Run custom SQL query on SQLite database
+    from_json(path, key=None, stream=False) → Load data from JSON file
+    from_yaml(path, key=None)           → Load data from YAML file
+    from_excel(path, sheet_name=None)   → Load data from Excel file
+
+    🔄 Transformations:
+
+    map(fn)                             → Transform each row
+    filter(fn)                          → Filter rows by condition
+    limit(n)                            → Limit number of rows
+    sort(key, reverse=False)            → Sort rows
+    groupby(key)                        → Group rows by a key
+
+    📊 Aggregations:
+
+    sum(by=None)                        → Sum values
+    count()                             → Count rows
+    max(by=None)                        → Maximum value/row
+    min(by=None)                        → Minimum value/row
+
+    📤 Output:
+
+    collect(n=None)                     → Return results as list
+    show(n=5)                           → Pretty print results
+
 ``` python
 # plain numbers
 Query.from_iterable([3, 1, 4, 1, 5]).sort().collect()

@@ -233,7 +233,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="datasets" class="level2">
 <h2 class="anchored" data-anchor-id="datasets">Datasets</h2>
-<div id="34d5224a" class="cell" data-execution_count="4">
+<div id="477adc35" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>scores <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'name'</span>: <span class="st">'Alice'</span>, <span class="st">'age'</span>: <span class="dv">30</span>, <span class="st">'score'</span>: <span class="dv">85</span>},</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'name'</span>: <span class="st">'Bob'</span>, <span class="st">'age'</span>: <span class="dv">17</span>, <span class="st">'score'</span>: <span class="dv">92</span>},</span>
@@ -269,30 +269,101 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="examples" class="level2">
 <h2 class="anchored" data-anchor-id="examples">Examples</h2>
-<div id="e50f44a2" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plain numbers</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>Query.from_iterable([<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>]).sort().collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<p><strong>Listing all available Query operations</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Query.tools()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A convenience method that prints a formatted reference of all available <a href="https://vikasAWA.github.io/lazyq/core.html#query"><code>Query</code></a> operations, grouped by category:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>What it shows</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>📦 <strong>Data Sources</strong></td>
+<td>Methods to load data from iterables, CSV, SQLite, JSON, YAML, and Excel</td>
+</tr>
+<tr class="even">
+<td>🔄 <strong>Transformations</strong></td>
+<td>Row-level operations: <code>map</code>, <code>filter</code>, <code>limit</code>, <code>sort</code>, <code>groupby</code></td>
+</tr>
+<tr class="odd">
+<td>📊 <strong>Aggregations</strong></td>
+<td>Summary operations: <code>sum</code>, <code>count</code>, <code>max</code>, <code>min</code></td>
+</tr>
+<tr class="even">
+<td>📤 <strong>Output</strong></td>
+<td><code>collect</code> to get a list, <code>show</code> to pretty-print a table</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Tip:</strong> Run <a href="https://vikasAWA.github.io/lazyq/core.html#query.tools"><code>Query.tools()</code></a> any time you need a quick reminder of what’s available — no imports or docs needed.</p>
+</blockquote>
+<div id="295531ab" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Query.tools()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+📦 Data Sources:
+
+from_iterable(data)                 → Create Query from list/iterable
+from_csv(path)                      → Load data from CSV file
+from_sqlite(db, table)              → Load table from SQLite database
+from_sqlite_query(db, query)        → Run custom SQL query on SQLite database
+from_json(path, key=None, stream=False) → Load data from JSON file
+from_yaml(path, key=None)           → Load data from YAML file
+from_excel(path, sheet_name=None)   → Load data from Excel file
+
+🔄 Transformations:
+
+map(fn)                             → Transform each row
+filter(fn)                          → Filter rows by condition
+limit(n)                            → Limit number of rows
+sort(key, reverse=False)            → Sort rows
+groupby(key)                        → Group rows by a key
+
+📊 Aggregations:
+
+sum(by=None)                        → Sum values
+count()                             → Count rows
+max(by=None)                        → Maximum value/row
+min(by=None)                        → Minimum value/row
+
+📤 Output:
+
+collect(n=None)                     → Return results as list
+show(n=5)                           → Pretty print results</code></pre>
+</div>
+</div>
+<div id="3357dec8" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plain numbers</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Query.from_iterable([<span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>]).sort().collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>[1, 1, 3, 4, 5]</code></pre>
 </div>
 </div>
 <p><strong>Chaining filters, sorts, and display</strong></p>
 <p>Filter rows by a condition, sort by a field, and preview results with <code>.show()</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(scores) <span class="op">\</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'age'</span>) <span class="op">&gt;</span> <span class="dv">19</span>) <span class="op">\</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'score'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(scores) <span class="op">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'age'</span>) <span class="op">&gt;</span> <span class="dv">19</span>) <span class="op">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'score'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>F('age') &gt; 19</code> — keeps only rows where <code>age</code> is greater than 19</li>
 <li><code>.sort(key='score', reverse=True)</code> — sorts by <code>score</code>, highest first</li>
 <li><code>.show()</code> — pretty-prints the top 5 rows as a table</li>
 </ul>
-<div id="ff3bfbf9" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># chained</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(scores)<span class="op">\</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'age'</span>) <span class="op">&gt;</span> <span class="dv">19</span>)<span class="op">\</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'score'</span>, reverse<span class="op">=</span><span class="va">True</span>)<span class="op">\</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="b959bd22" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># chained</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(scores)<span class="op">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'age'</span>) <span class="op">&gt;</span> <span class="dv">19</span>)<span class="op">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'score'</span>, reverse<span class="op">=</span><span class="va">True</span>)<span class="op">\</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>name  | age | score
 -------------------
@@ -303,26 +374,26 @@ Carol | 25  | 60   </code></pre>
 </div>
 <p><strong>Grouping and aggregating</strong></p>
 <p>Use <code>.groupby(key)</code> followed by <code>.sum(field)</code> to total a numeric field across groups.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(sales).groupby(<span class="st">'region'</span>).<span class="bu">sum</span>(<span class="st">'units'</span>).collect()</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># → [('north', 37.0), ('south', 33.0), ('east', 25.0)]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(sales).groupby(<span class="st">'region'</span>).<span class="bu">sum</span>(<span class="st">'units'</span>).collect()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># → [('north', 37.0), ('south', 33.0), ('east', 25.0)]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li><code>.groupby('region')</code> — groups rows by the <code>'region'</code> field</li>
 <li><code>.sum('units')</code> — sums the <code>'units'</code> field within each group</li>
 <li><code>.collect()</code> — returns results as a list of <code>(group_key, total)</code> tuples</li>
 </ul>
-<div id="72bded26" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(sales).groupby(<span class="st">'region'</span>).<span class="bu">sum</span>(<span class="st">'units'</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="9c255bf7" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(sales).groupby(<span class="st">'region'</span>).<span class="bu">sum</span>(<span class="st">'units'</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>[('north', 37.0), ('south', 33.0), ('east', 25.0)]</code></pre>
 </div>
 </div>
 <p><strong>Top N results from a filtered, sorted dataset</strong></p>
 <p>Filter rows by a field value, sort by another field, limit results, and display as a table.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(movies) <span class="op">\</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'genre'</span>) <span class="op">==</span> <span class="st">'scifi'</span>) <span class="op">\</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">'rating'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">3</span>) <span class="op">\</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(movies) <span class="op">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'genre'</span>) <span class="op">==</span> <span class="st">'scifi'</span>) <span class="op">\</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">'rating'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">3</span>) <span class="op">\</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -363,12 +434,12 @@ Dune         | scifi | 2021 | 8.0    | 401</code></pre>
 <p><strong>Tip:</strong> You can swap <code>'scifi'</code> for <code>'action'</code> or <code>'thriller'</code>, change the sort field to <code>'gross_m'</code>, or adjust <code>limit(3)</code> to get different slices of your data.</p>
 </blockquote>
 <hr>
-<div id="5168c410" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(movies) <span class="op">\</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'genre'</span>) <span class="op">==</span> <span class="st">'scifi'</span>) <span class="op">\</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">'rating'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">3</span>) <span class="op">\</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="4406a509" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(movies) <span class="op">\</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'genre'</span>) <span class="op">==</span> <span class="st">'scifi'</span>) <span class="op">\</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">'rating'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">3</span>) <span class="op">\</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>title        | genre | year | rating | gross_m
 ----------------------------------------------
@@ -379,7 +450,7 @@ Dune         | scifi | 2021 | 8.0    | 401    </code></pre>
 </div>
 <p><strong>Loading and previewing data from a SQLite database</strong></p>
 <p>Use <a href="https://vikasAWA.github.io/lazyq/core.html#query.from_sqlite"><code>Query.from_sqlite()</code></a> to read directly from a SQLite table and preview the results.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite(<span class="st">'shows.db'</span>, <span class="st">'shows'</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite(<span class="st">'shows.db'</span>, <span class="st">'shows'</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -410,17 +481,17 @@ Dune         | scifi | 2021 | 8.0    | 401    </code></pre>
 ...</code></pre>
 <blockquote class="blockquote">
 <p><strong>Tip:</strong> You can chain further operations after <code>from_sqlite()</code>, for example:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite(<span class="st">'shows.db'</span>, <span class="st">'shows'</span>) <span class="op">\</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()) <span class="op">\</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'year'</span>) <span class="op">&gt;</span> <span class="dv">1975</span>) <span class="op">\</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">'episodes'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite(<span class="st">'shows.db'</span>, <span class="st">'shows'</span>) <span class="op">\</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()) <span class="op">\</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'year'</span>) <span class="op">&gt;</span> <span class="dv">1975</span>) <span class="op">\</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">'episodes'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>For custom SQL, use <code>Query.from_sqlite_query(db, query)</code> instead.</p>
 </blockquote>
 <hr>
-<div id="9bdd5085" class="cell" data-execution_count="28">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>shows_table <span class="op">=</span> Query.from_sqlite(<span class="st">'../data/shows.db'</span>, <span class="st">'shows'</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>shows_table.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e9162f39" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>shows_table <span class="op">=</span> Query.from_sqlite(<span class="st">'../data/shows.db'</span>, <span class="st">'shows'</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>shows_table.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>id    | title                       | year | episodes
 -----------------------------------------------------
@@ -431,11 +502,11 @@ Dune         | scifi | 2021 | 8.0    | 401    </code></pre>
 65270 | The Adventures of Don Quick | 1970 | 6       </code></pre>
 </div>
 </div>
-<div id="6ea2b81d" class="cell" data-execution_count="29">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>shows_table <span class="op">\</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'year'</span>).not_null()) <span class="op">\</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()) <span class="op">\</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="8722ce2c" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>shows_table <span class="op">\</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'year'</span>).not_null()) <span class="op">\</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()) <span class="op">\</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>id    | title                       | year | episodes
 -----------------------------------------------------
@@ -448,11 +519,11 @@ Dune         | scifi | 2021 | 8.0    | 401    </code></pre>
 </div>
 <p><strong>Finding the top N rows by a numeric field</strong></p>
 <p>Filter out nulls, sort descending, and limit to get the top results.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite(<span class="st">'shows.db'</span>, <span class="st">'shows'</span>) <span class="op">\</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()) <span class="op">\</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'episodes'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">5</span>) <span class="op">\</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite(<span class="st">'shows.db'</span>, <span class="st">'shows'</span>) <span class="op">\</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()) <span class="op">\</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'episodes'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">5</span>) <span class="op">\</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -497,12 +568,12 @@ Dune         | scifi | 2021 | 8.0    | 401    </code></pre>
 <p><strong>Tip:</strong> Replace <code>'episodes'</code> with any numeric field (e.g.&nbsp;<code>'year'</code>) and adjust <code>limit(5)</code> to get different top-N results.</p>
 </blockquote>
 <hr>
-<div id="236a51e5" class="cell" data-execution_count="30">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 5 shows by episodes</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>shows_table<span class="op">\</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null())<span class="op">\</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'episodes'</span>, reverse<span class="op">=</span><span class="va">True</span>)<span class="op">\</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">5</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="600b0389" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 5 shows by episodes</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>shows_table<span class="op">\</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null())<span class="op">\</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'episodes'</span>, reverse<span class="op">=</span><span class="va">True</span>)<span class="op">\</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">5</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>id       | title                      | year | episodes
 -------------------------------------------------------
@@ -514,11 +585,11 @@ Dune         | scifi | 2021 | 8.0    | 401    </code></pre>
 </div>
 </div>
 <p><strong>Counting records per group, sorted by frequency</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite(<span class="st">'shows.db'</span>, <span class="st">'shows'</span>) <span class="op">\</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'year'</span>).not_null()) <span class="op">\</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'year'</span>).count() <span class="op">\</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="dv">1</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    .collect(<span class="dv">7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite(<span class="st">'shows.db'</span>, <span class="st">'shows'</span>) <span class="op">\</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'year'</span>).not_null()) <span class="op">\</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'year'</span>).count() <span class="op">\</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="dv">1</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    .collect(<span class="dv">7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -552,12 +623,12 @@ Dune         | scifi | 2021 | 8.0    | 401    </code></pre>
 <blockquote class="blockquote">
 <p><strong>Tip:</strong> <code>key=1</code> refers to the second element of the tuple (the count). Use <code>key=0</code> to sort alphabetically/chronologically by the group key instead.</p>
 </blockquote>
-<div id="23117e31" class="cell" data-execution_count="31">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count shows per year</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>shows_table<span class="op">\</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'year'</span>).not_null())<span class="op">\</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'year'</span>).count().sort(key<span class="op">=</span><span class="dv">1</span>, reverse<span class="op">=</span><span class="va">True</span>).collect(<span class="dv">7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="31">
+<div id="b725581c" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count shows per year</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>shows_table<span class="op">\</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'year'</span>).not_null())<span class="op">\</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'year'</span>).count().sort(key<span class="op">=</span><span class="dv">1</span>, reverse<span class="op">=</span><span class="va">True</span>).collect(<span class="dv">7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>[(2020, 12705),
  (2021, 12241),
  (2018, 11646),
@@ -567,20 +638,20 @@ Dune         | scifi | 2021 | 8.0    | 401    </code></pre>
  (2015, 11121)]</code></pre>
 </div>
 </div>
-<div id="70e30ee8" class="cell" data-execution_count="32">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Sort ==="</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(scores).sort(key<span class="op">=</span><span class="st">'age'</span>).show()</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== GroupedQuery count ==="</span>)</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(Query.from_iterable(movies).groupby(<span class="st">'genre'</span>).count().collect())</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== GroupedQuery max ==="</span>)</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(Query.from_iterable(movies).groupby(<span class="st">'genre'</span>).<span class="bu">max</span>(by<span class="op">=</span><span class="st">'rating'</span>).collect())</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Double iteration ==="</span>)</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> Query.from_iterable(scores).limit(<span class="dv">3</span>)</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(q.collect())</span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(q.collect())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6962f833" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"=== Sort ==="</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>Query.from_iterable(scores).sort(key<span class="op">=</span><span class="st">'age'</span>).show()</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== GroupedQuery count ==="</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(Query.from_iterable(movies).groupby(<span class="st">'genre'</span>).count().collect())</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== GroupedQuery max ==="</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(Query.from_iterable(movies).groupby(<span class="st">'genre'</span>).<span class="bu">max</span>(by<span class="op">=</span><span class="st">'rating'</span>).collect())</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">=== Double iteration ==="</span>)</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>q <span class="op">=</span> Query.from_iterable(scores).limit(<span class="dv">3</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(q.collect())</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(q.collect())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>=== Sort ===
 name  | age | score
@@ -603,12 +674,12 @@ Alice | 30  | 85
 </div>
 </div>
 <p><strong>Most episodes per group, sorted by group key</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite(<span class="st">'shows.db'</span>, <span class="st">'shows'</span>) <span class="op">\</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()) <span class="op">\</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'year'</span>).<span class="bu">max</span>(by<span class="op">=</span><span class="st">'episodes'</span>) <span class="op">\</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="va">None</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">5</span>) <span class="op">\</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    .collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite(<span class="st">'shows.db'</span>, <span class="st">'shows'</span>) <span class="op">\</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()) <span class="op">\</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'year'</span>).<span class="bu">max</span>(by<span class="op">=</span><span class="st">'episodes'</span>) <span class="op">\</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="va">None</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">5</span>) <span class="op">\</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>    .collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -646,12 +717,12 @@ Alice | 30  | 85
 <blockquote class="blockquote">
 <p><strong>Tip:</strong> Swap <code>.max(by='episodes')</code> with <code>.min(by='episodes')</code> to find the shortest show per year instead.</p>
 </blockquote>
-<div id="fb5680d7" class="cell" data-execution_count="33">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Most episodes per year group</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>shows_table<span class="op">\</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null())<span class="op">\</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'year'</span>).<span class="bu">max</span>(by<span class="op">=</span><span class="st">'episodes'</span>).sort(key<span class="op">=</span><span class="va">None</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">5</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="33">
+<div id="cd06f4f3" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Most episodes per year group</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>shows_table<span class="op">\</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null())<span class="op">\</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'year'</span>).<span class="bu">max</span>(by<span class="op">=</span><span class="st">'episodes'</span>).sort(key<span class="op">=</span><span class="va">None</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">5</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>[(2027, {'id': 38225416, 'title': 'Hangout.', 'year': 2027, 'episodes': 1}),
  (2026, {'id': 37180875, 'title': 'Imanje', 'year': 2026, 'episodes': 72}),
  (2025,
@@ -668,12 +739,12 @@ Alice | 30  | 85
    'episodes': 882})]</code></pre>
 </div>
 </div>
-<div id="b451da8c" class="cell" data-execution_count="34">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#total episodes per year (top 5 years)</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>shows_table<span class="op">\</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null())<span class="op">\</span></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'year'</span>).<span class="bu">sum</span>(by<span class="op">=</span><span class="st">'episodes'</span>).sort(key<span class="op">=</span><span class="dv">1</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">5</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div id="65c14292" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#total episodes per year (top 5 years)</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>shows_table<span class="op">\</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null())<span class="op">\</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'year'</span>).<span class="bu">sum</span>(by<span class="op">=</span><span class="st">'episodes'</span>).sort(key<span class="op">=</span><span class="dv">1</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">5</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>[(2012, 324658.0),
  (2011, 313426.0),
  (2017, 301113.0),
@@ -682,9 +753,9 @@ Alice | 30  | 85
 </div>
 </div>
 <p><strong>Listing all tables in a SQLite database</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'shows.db'</span>,</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SELECT name FROM sqlite_master WHERE type='table'"</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'shows.db'</span>,</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SELECT name FROM sqlite_master WHERE type='table'"</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -710,10 +781,10 @@ Alice | 30  | 85
 <blockquote class="blockquote">
 <p><strong>Tip:</strong> Use <code>from_sqlite_query()</code> whenever you need custom SQL — joins, subqueries, or schema inspection like this example.</p>
 </blockquote>
-<div id="210032ca" class="cell" data-execution_count="36">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>tables <span class="op">=</span> Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"SELECT name FROM sqlite_master WHERE type='table'"</span>).collect()</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>tables</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div id="af989a9f" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>tables <span class="op">=</span> Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"SELECT name FROM sqlite_master WHERE type='table'"</span>).collect()</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>tables</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>[{'name': 'genres'},
  {'name': 'people'},
  {'name': 'ratings'},
@@ -722,9 +793,9 @@ Alice | 30  | 85
  {'name': 'writers'}]</code></pre>
 </div>
 </div>
-<div id="1b23ece6" class="cell" data-execution_count="38">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>ratings <span class="op">=</span> Query.from_sqlite(<span class="st">'../data/shows.db'</span>, <span class="st">'ratings'</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>ratings.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="4bb2d0e2" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>ratings <span class="op">=</span> Query.from_sqlite(<span class="st">'../data/shows.db'</span>, <span class="st">'ratings'</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>ratings.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>show_id | rating | votes
 ------------------------
@@ -736,11 +807,11 @@ Alice | 30  | 85
 </div>
 </div>
 <p><strong>Joining tables with custom SQL</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">=</span> Query.from_sqlite_query(<span class="st">'shows.db'</span>, <span class="st">"""</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT s.title, s.year, s.episodes, r.rating, r.votes</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM shows s JOIN ratings r ON s.id = r.show_id</span></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>joined.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">=</span> Query.from_sqlite_query(<span class="st">'shows.db'</span>, <span class="st">"""</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT s.title, s.year, s.episodes, r.rating, r.votes</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM shows s JOIN ratings r ON s.id = r.show_id</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>joined.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -770,12 +841,12 @@ Alice | 30  | 85
 <blockquote class="blockquote">
 <p><strong>Tip:</strong> Once joined, you can chain any Query operations — e.g.&nbsp;<code>.filter(F('rating') &gt; 8.0).sort('votes', reverse=True)</code> to find highly-rated, well-known shows.</p>
 </blockquote>
-<div id="e9e6e93b" class="cell" data-execution_count="40">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">=</span> Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"""</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT s.title, s.year, s.episodes, r.rating, r.votes</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM shows s JOIN ratings r ON s.id = r.show_id</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>joined.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="55972140" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">=</span> Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"""</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT s.title, s.year, s.episodes, r.rating, r.votes</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM shows s JOIN ratings r ON s.id = r.show_id</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>joined.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>title                       | year | episodes | rating | votes
 --------------------------------------------------------------
@@ -787,11 +858,11 @@ The Adventures of Don Quick | 1970 | 6        | 7.5    | 33   </code></pre>
 </div>
 </div>
 <p><strong>Top N highest-rated shows with a minimum vote threshold</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">\</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'votes'</span>) <span class="op">&gt;</span> <span class="dv">1000</span>) <span class="op">\</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'rating'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">10</span>) <span class="op">\</span></span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    .show(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">\</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'votes'</span>) <span class="op">&gt;</span> <span class="dv">1000</span>) <span class="op">\</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'rating'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">10</span>) <span class="op">\</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    .show(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -825,9 +896,9 @@ The Adventures of Don Quick | 1970 | 6        | 7.5    | 33   </code></pre>
 <blockquote class="blockquote">
 <p><strong>Tip:</strong> Raise the votes threshold (e.g.&nbsp;<code>&gt; 10000</code>) for more well-known titles, or chain <code>.select(['title', 'rating', 'votes'])</code> to slim down the output columns.</p>
 </blockquote>
-<div id="4b7addf5" class="cell" data-execution_count="41">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 10 highest rated shows (with at least 1000 votes)</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>joined.<span class="bu">filter</span>(F(<span class="st">'votes'</span>) <span class="op">&gt;</span> <span class="dv">1000</span>).sort(key<span class="op">=</span><span class="st">'rating'</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">10</span>).show(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="5e36f5ce" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 10 highest rated shows (with at least 1000 votes)</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>joined.<span class="bu">filter</span>(F(<span class="st">'votes'</span>) <span class="op">&gt;</span> <span class="dv">1000</span>).sort(key<span class="op">=</span><span class="st">'rating'</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">10</span>).show(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>title                      | year | episodes | rating | votes  
 ---------------------------------------------------------------
@@ -844,11 +915,11 @@ The Surrealists' Top Chart | 1984 | 33       | 9.4    | 1787   </code></pre>
 </div>
 </div>
 <p><strong>Most voted shows with episode data</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">\</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()) <span class="op">\</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'votes'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">5</span>) <span class="op">\</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>joined <span class="op">\</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()) <span class="op">\</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="st">'votes'</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">5</span>) <span class="op">\</span></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    .show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -882,9 +953,9 @@ The Surrealists' Top Chart | 1984 | 33       | 9.4    | 1787   </code></pre>
 <blockquote class="blockquote">
 <p><strong>Tip:</strong> Combine with a rating filter — e.g.&nbsp;<code>.filter(F('votes') &gt; 500000 &amp; F('rating') &gt; 8.5)</code> — to find both massively popular <em>and</em> critically acclaimed shows.</p>
 </blockquote>
-<div id="d5f11aad" class="cell" data-execution_count="43">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Most voted shows</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>joined.<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()).sort(key<span class="op">=</span><span class="st">'votes'</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">5</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="7b5494ff" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Most voted shows</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>joined.<span class="bu">filter</span>(F(<span class="st">'episodes'</span>).not_null()).sort(key<span class="op">=</span><span class="st">'votes'</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">5</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>title            | year | episodes | rating | votes  
 -----------------------------------------------------
@@ -895,10 +966,10 @@ The Walking Dead | 2010 | 177      | 8.1    | 1165465
 Friends          | 1994 | 235      | 8.9    | 1164587</code></pre>
 </div>
 </div>
-<div id="29b3b626" class="cell" data-execution_count="44">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> tables:</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== </span><span class="sc">{</span>t[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> ==="</span>)</span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    Query.from_sqlite(<span class="st">'../data/shows.db'</span>, t[<span class="st">'name'</span>]).show(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="55d05781" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> t <span class="kw">in</span> tables:</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">=== </span><span class="sc">{</span>t[<span class="st">'name'</span>]<span class="sc">}</span><span class="ss"> ==="</span>)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    Query.from_sqlite(<span class="st">'../data/shows.db'</span>, t[<span class="st">'name'</span>]).show(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 === genres ===
@@ -945,17 +1016,17 @@ show_id | person_id
 </div>
 </div>
 <p><strong>Best-rated show per genre using a multi-table JOIN</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'shows.db'</span>, <span class="st">"""</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT s.title, s.year, g.genre, r.rating, r.votes</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM shows s </span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN ratings r ON s.id = r.show_id</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN genres g ON s.id = g.show_id</span></span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>) <span class="op">\</span></span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'votes'</span>) <span class="op">&gt;</span> <span class="dv">1000</span>) <span class="op">\</span></span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'genre'</span>).<span class="bu">max</span>(by<span class="op">=</span><span class="st">'rating'</span>) <span class="op">\</span></span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="va">None</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
-<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">10</span>) <span class="op">\</span></span>
-<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>    .collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'shows.db'</span>, <span class="st">"""</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT s.title, s.year, g.genre, r.rating, r.votes</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM shows s </span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN ratings r ON s.id = r.show_id</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN genres g ON s.id = g.show_id</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>) <span class="op">\</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(F(<span class="st">'votes'</span>) <span class="op">&gt;</span> <span class="dv">1000</span>) <span class="op">\</span></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>    .groupby(<span class="st">'genre'</span>).<span class="bu">max</span>(by<span class="op">=</span><span class="st">'rating'</span>) <span class="op">\</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>    .sort(key<span class="op">=</span><span class="va">None</span>, reverse<span class="op">=</span><span class="va">True</span>) <span class="op">\</span></span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>    .limit(<span class="dv">10</span>) <span class="op">\</span></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>    .collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -993,16 +1064,16 @@ show_id | person_id
 <blockquote class="blockquote">
 <p><strong>Tip:</strong> Swap <code>.max(by='rating')</code> with <code>.max(by='votes')</code> to find the most <em>popular</em> (rather than highest-rated) show per genre.</p>
 </blockquote>
-<div id="3aa6c8b8" class="cell" data-execution_count="46">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Best rated shows by genre</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"""</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT s.title, s.year, g.genre, r.rating, r.votes</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM shows s </span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN ratings r ON s.id = r.show_id</span></span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN genres g ON s.id = g.show_id</span></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).<span class="bu">filter</span>(F(<span class="st">'votes'</span>) <span class="op">&gt;</span> <span class="dv">1000</span>)<span class="op">\</span></span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>   .groupby(<span class="st">'genre'</span>).<span class="bu">max</span>(by<span class="op">=</span><span class="st">'rating'</span>).sort(key<span class="op">=</span><span class="va">None</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">10</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="46">
+<div id="68c2b082" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Best rated shows by genre</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"""</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT s.title, s.year, g.genre, r.rating, r.votes</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM shows s </span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN ratings r ON s.id = r.show_id</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN genres g ON s.id = g.show_id</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).<span class="bu">filter</span>(F(<span class="st">'votes'</span>) <span class="op">&gt;</span> <span class="dv">1000</span>)<span class="op">\</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>   .groupby(<span class="st">'genre'</span>).<span class="bu">max</span>(by<span class="op">=</span><span class="st">'rating'</span>).sort(key<span class="op">=</span><span class="va">None</span>, reverse<span class="op">=</span><span class="va">True</span>).limit(<span class="dv">10</span>).collect()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>[('Western',
   {'title': 'Yellowstone',
    'year': 2018,
@@ -1066,11 +1137,11 @@ show_id | person_id
 </div>
 </div>
 <p><strong>Most prolific actors using SQL aggregation</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'shows.db'</span>, <span class="st">"""</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT p.name, COUNT(*) as show_count</span></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM people p JOIN stars s ON p.id = s.person_id</span></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY p.id ORDER BY show_count DESC LIMIT 10</span></span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'shows.db'</span>, <span class="st">"""</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT p.name, COUNT(*) as show_count</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM people p JOIN stars s ON p.id = s.person_id</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY p.id ORDER BY show_count DESC LIMIT 10</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -1108,13 +1179,13 @@ show_id | person_id
 <blockquote class="blockquote">
 <p><strong>Tip:</strong> This query uses SQL-side aggregation for performance — ideal when working with large tables. You can swap <code>stars</code> for <code>writers</code> to find the most prolific writers instead.</p>
 </blockquote>
-<div id="60ee9683" class="cell" data-execution_count="47">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Most prolific actors</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"""</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT p.name, COUNT(*) as show_count</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM people p JOIN stars s ON p.id = s.person_id</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY p.id ORDER BY show_count DESC LIMIT 10</span></span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="f125f7d7" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Most prolific actors</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>Query.from_sqlite_query(<span class="st">'../data/shows.db'</span>, <span class="st">"""</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT p.name, COUNT(*) as show_count</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM people p JOIN stars s ON p.id = s.person_id</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY p.id ORDER BY show_count DESC LIMIT 10</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>name              | show_count
 ------------------------------
