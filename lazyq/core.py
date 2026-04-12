@@ -6,7 +6,7 @@
 __all__ = ['SKIP', 'STOP', 'Map', 'Filter', 'Limit', 'Select', 'GroupBy', 'Reduce', 'Sort', 'Condition', 'F', 'read_csv',
            'read_sqlite3', 'read_json', 'read_yaml', 'read_excel', 'Query', 'GroupedQuery']
 
-# %% ../nbs/00_core.ipynb #2e8294d9
+# %% ../nbs/00_core.ipynb #d20a6d5a
 # Sentinels
 SKIP = object()
 STOP = object()
