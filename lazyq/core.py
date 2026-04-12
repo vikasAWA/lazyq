@@ -6,7 +6,7 @@
 __all__ = ['SKIP', 'STOP', 'Map', 'Filter', 'Limit', 'Select', 'GroupBy', 'Reduce', 'Sort', 'Condition', 'F', 'read_csv',
            'read_sqlite3', 'read_json', 'read_yaml', 'read_excel', 'Query', 'GroupedQuery']
 
-# %% ../nbs/00_core.ipynb #d20a6d5a
+# %% ../nbs/00_core.ipynb #d12ec528
 # Sentinels
 SKIP = object()
 STOP = object()
@@ -63,7 +63,10 @@ class Sort:
         self.key = key
         self.reverse = reverse
     def run(self, data):
-        if self.key is None: return sorted(data, reverse=self.reverse)
+        if self.key is None:
+            return sorted(data, reverse=self.reverse)
+        if callable(self.key):
+            return sorted(data, key=self.key, reverse=self.reverse)
         return sorted(data, key=lambda x: x[self.key], reverse=self.reverse)
 
 # Filter Expression Classes
