@@ -557,16 +557,7 @@ print(q.collect())
     [{'name': 'Alice', 'age': 30, 'score': 85}, {'name': 'Bob', 'age': 17, 'score': 92}, {'name': 'Carol', 'age': 25, 'score': 60}]
     [{'name': 'Alice', 'age': 30, 'score': 85}, {'name': 'Bob', 'age': 17, 'score': 92}, {'name': 'Carol', 'age': 25, 'score': 60}]
 
-**Most episodes per group, sorted by group key**
-
-``` python
-Query.from_sqlite('shows.db', 'shows') \
-    .filter(F('episodes').not_null()) \
-    .groupby('year').max(by='episodes') \
-    .sort(key=None, reverse=True) \
-    .limit(5) \
-    .collect()
-```
+**Top shows by episode count, grouped by year**
 
 <table>
 <colgroup>
@@ -582,53 +573,56 @@ Query.from_sqlite('shows.db', 'shows') \
 <tbody>
 <tr>
 <td><code>.filter(F('episodes').not_null())</code></td>
-<td>Drops rows with no episode count</td>
+<td>Skips shows with no episode count</td>
 </tr>
 <tr>
 <td><code>.groupby('year').max(by='episodes')</code></td>
-<td>Finds the show with the most episodes in each year, yielding
+<td>Finds the most-episodes show per year, yielding
 <code>(year, row)</code> tuples</td>
 </tr>
 <tr>
-<td><code>.sort(key=None, reverse=True)</code></td>
-<td>Sorts by year descending (<code>key=None</code> sorts on the whole
-tuple, i.e. index <code>0</code>)</td>
+<td><code>.sort(key=lambda x: x[1]['episodes'], reverse=True)</code></td>
+<td>Sorts groups by their max episode count, highest first</td>
 </tr>
 <tr>
-<td><code>.limit(5)</code></td>
-<td>Keeps the 5 most recent years</td>
-</tr>
-<tr>
-<td><code>.collect()</code></td>
-<td>Returns results as a list</td>
+<td><code>.collect(4)</code></td>
+<td>Returns the top 4 results as a list</td>
 </tr>
 </tbody>
 </table>
 
-> **Tip:** Swap `.max(by='episodes')` with `.min(by='episodes')` to find
-> the shortest show per year instead.
+> **Tip:** The `lambda x: x[1]['episodes']` key drills into the nested
+> row dict inside each `(year, row)` tuple. Use `key=lambda x: x[0]` to
+> sort by year instead.
 
 ``` python
-# Most episodes per year group
+#Top shows by episode count, grouped by year
 shows_table\
-    .filter(F('episodes').not_null())\
-    .groupby('year').max(by='episodes').sort(key=None, reverse=True).limit(5).collect()
+    .filter(F('episodes').not_null()) \
+    .groupby('year').max(by='episodes') \
+    .sort(key=lambda x: x[1]['episodes'], reverse=True) \
+    .collect(5)
 ```
 
-    [(2027, {'id': 38225416, 'title': 'Hangout.', 'year': 2027, 'episodes': 1}),
-     (2026, {'id': 37180875, 'title': 'Imanje', 'year': 2026, 'episodes': 72}),
-     (2025,
-      {'id': 32125269,
-       'title': 'Beyond the Gates',
-       'year': 2025,
-       'episodes': 225}),
-     (2024,
-      {'id': 32119132, 'title': 'A Sentença', 'year': 2024, 'episodes': 843}),
-     (2023,
-      {'id': 32179022,
-       'title': 'Tu Khara Mun Chhai',
-       'year': 2023,
-       'episodes': 882})]
+    [(2007,
+      {'id': 12164062, 'title': 'NRK Nyheter', 'year': 2007, 'episodes': 18593}),
+     (1973,
+      {'id': 69658,
+       'title': 'The Young and the Restless',
+       'year': 1973,
+       'episodes': 13297}),
+     (1987,
+      {'id': 988827,
+       'title': 'See the World by Train',
+       'year': 1987,
+       'episodes': 10674}),
+     (1975,
+      {'id': 33062164,
+       'title': 'WREG News 3 at 10PM',
+       'year': 1975,
+       'episodes': 10663}),
+     (1998,
+      {'id': 175383, 'title': 'Barátok közt', 'year': 1998, 'episodes': 10456})]
 
 ``` python
 #total episodes per year (top 5 years)
@@ -760,52 +754,6 @@ joined.show()
     Ace of Wands                | 1970 | 46       | 7.5    | 141  
     The Adventures of Don Quick | 1970 | 6        | 7.5    | 33   
 
-**Top N highest-rated shows with a minimum vote threshold**
-
-``` python
-joined \
-    .filter(F('votes') > 1000) \
-    .sort(key='rating', reverse=True) \
-    .limit(10) \
-    .show(10)
-```
-
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>Step</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>.filter(F('votes') &gt; 1000)</code></td>
-<td>Excludes shows with fewer than 1000 votes (removes
-obscure/unreliable ratings)</td>
-</tr>
-<tr>
-<td><code>.sort(key='rating', reverse=True)</code></td>
-<td>Sorts by rating, highest first</td>
-</tr>
-<tr>
-<td><code>.limit(10)</code></td>
-<td>Keeps the top 10 results</td>
-</tr>
-<tr>
-<td><code>.show(10)</code></td>
-<td>Prints all 10 rows (overrides default preview of 5)</td>
-</tr>
-</tbody>
-</table>
-
-> **Tip:** Raise the votes threshold (e.g. `> 10000`) for more
-> well-known titles, or chain `.select(['title', 'rating', 'votes'])` to
-> slim down the output columns.
-
 ``` python
 # Top 10 highest rated shows (with at least 1000 votes)
 joined.filter(F('votes') > 1000).sort(key='rating', reverse=True).limit(10).show(10)
@@ -931,71 +879,72 @@ for t in tables:
     62614   | 688754   
     63881   | 139441   
 
-**Best-rated show per genre using a multi-table JOIN**
+**Best rated show per genre**
 
 ``` python
-Query.from_sqlite_query('shows.db', """
-    SELECT s.title, s.year, g.genre, r.rating, r.votes
-    FROM shows s 
-    JOIN ratings r ON s.id = r.show_id
-    JOIN genres g ON s.id = g.show_id
-""") \
-    .filter(F('votes') > 1000) \
-    .groupby('genre').max(by='rating') \
-    .sort(key=None, reverse=True) \
-    .limit(10) \
+Query.from_sqlite_query('shows.db', sql_q)
+    .filter(F('votes') > 1000)
+    .groupby('genre').max(by='rating')
     .collect()
 ```
 
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th>Step</th>
-<th>What it does</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>from_sqlite_query(...)</code></td>
-<td>Joins <code>shows</code>, <code>ratings</code>, and
-<code>genres</code> tables in one SQL query</td>
-</tr>
-<tr>
-<td><code>.filter(F('votes') &gt; 1000)</code></td>
-<td>Keeps only well-known shows</td>
-</tr>
-<tr>
-<td><code>.groupby('genre').max(by='rating')</code></td>
-<td>Finds the top-rated show in each genre, yielding
-<code>(genre, row)</code> tuples</td>
-</tr>
-<tr>
-<td><code>.sort(key=None, reverse=True)</code></td>
-<td>Sorts genres alphabetically in reverse (Z→A)</td>
-</tr>
-<tr>
-<td><code>.limit(10).collect()</code></td>
-<td>Returns top 10 genres as a list</td>
-</tr>
-</tbody>
-</table>
+Think of this like sorting a pile of movies into genre buckets (Action,
+Comedy, Drama…), then picking the **highest-rated show** from each
+bucket. We also require at least **1,000 votes** so obscure shows don’t
+sneak in with a perfect score from 5 friends.
 
-> **Tip:** Swap `.max(by='rating')` with `.max(by='votes')` to find the
-> most *popular* (rather than highest-rated) show per genre.
+------------------------------------------------------------------------
 
 ``` python
-# Best rated shows by genre
-Query.from_sqlite_query('../data/shows.db', """
+# joining shows, ratings and genre on show_id
+sql_q ="""
     SELECT s.title, s.year, g.genre, r.rating, r.votes
     FROM shows s 
     JOIN ratings r ON s.id = r.show_id
     JOIN genres g ON s.id = g.show_id
-""").filter(F('votes') > 1000)\
-   .groupby('genre').max(by='rating').sort(key=None, reverse=True).limit(10).collect()
+"""
+```
+
+``` python
+# Best rated shows by genre
+Query.from_sqlite_query('../data/shows.db', sql_q).filter(F('votes') > 1000)\
+   .groupby('genre').max(by='rating').collect(3)
+```
+
+    [('Adventure',
+      {'title': 'Geografens testamente',
+       'year': 2011,
+       'genre': 'Adventure',
+       'rating': 9.6,
+       'votes': 1040}),
+     ('Comedy',
+      {'title': 'Amrutham',
+       'year': 2001,
+       'genre': 'Comedy',
+       'rating': 9.6,
+       'votes': 1029}),
+     ('Family',
+      {'title': "De'ah Da'iah",
+       'year': 2008,
+       'genre': 'Family',
+       'rating': 9.4,
+       'votes': 1208})]
+
+**Same query, but sorted alphabetically (Z → A)**
+
+``` python
+...max(by='rating').sort(reverse=True).collect()
+```
+
+This is identical to the query above, with one addition:
+`.sort(reverse=True)` arranges the results **alphabetically by genre
+name, from Z to A** (Western → Action). Without it, genres appear in the
+order they were first encountered in the data.
+
+``` python
+# Best rated shows by genre
+Query.from_sqlite_query('../data/shows.db', sql_q).filter(F('votes') > 1000)\
+   .groupby('genre').max(by='rating').sort(reverse=True).collect(3) # short alphbatically in reverse order
 ```
 
     [('Western',
@@ -1015,49 +964,7 @@ Query.from_sqlite_query('../data/shows.db', """
        'year': 2008,
        'genre': 'Thriller',
        'rating': 9.5,
-       'votes': 2413272}),
-     ('Talk-Show',
-      {'title': "Bi' Kahve 2 Sohbet",
-       'year': 2016,
-       'genre': 'Talk-Show',
-       'rating': 9.4,
-       'votes': 6684}),
-     ('Sport',
-      {'title': 'Londra Merkez',
-       'year': 2018,
-       'genre': 'Sport',
-       'rating': 9.4,
-       'votes': 2096}),
-     ('Short',
-      {'title': 'Upanishad Ganga',
-       'year': 2012,
-       'genre': 'Short',
-       'rating': 9.5,
-       'votes': 1265}),
-     ('Sci-Fi',
-      {'title': 'Firefly',
-       'year': 2002,
-       'genre': 'Sci-Fi',
-       'rating': 8.9,
-       'votes': 294721}),
-     ('Romance',
-      {'title': 'Mothevari Love Story',
-       'year': 2025,
-       'genre': 'Romance',
-       'rating': 9.3,
-       'votes': 1115}),
-     ('Reality-TV',
-      {'title': 'The Why Files',
-       'year': 2020,
-       'genre': 'Reality-TV',
-       'rating': 9.5,
-       'votes': 1142}),
-     ('News',
-      {'title': 'Weather Report',
-       'year': 2005,
-       'genre': 'News',
-       'rating': 9.2,
-       'votes': 1288})]
+       'votes': 2413272})]
 
 **Most prolific actors using SQL aggregation**
 

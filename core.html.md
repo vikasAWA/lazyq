@@ -5,7 +5,7 @@
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L267"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L270"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### GroupedQuery
@@ -22,7 +22,7 @@ def GroupedQuery(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L135"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L138"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### Query
@@ -39,7 +39,7 @@ def Query(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L126"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L129"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### read_excel
@@ -54,7 +54,7 @@ def read_excel(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L115"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L118"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### read_yaml
@@ -69,7 +69,7 @@ def read_yaml(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L101"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L104"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### read_json
@@ -84,7 +84,7 @@ def read_json(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L94"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L97"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### read_sqlite3
@@ -99,7 +99,7 @@ def read_sqlite3(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L90"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L93"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### read_csv
@@ -114,7 +114,7 @@ def read_csv(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L76"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L79"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### F
@@ -131,7 +131,7 @@ def F(
 
 ------------------------------------------------------------------------
 
-<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L70"
+<a href="https://github.com/vikasAWA/lazyq/blob/main/lazyq/core.py#L73"
 target="_blank" style="float:right; font-size:smaller">source</a>
 
 ### Condition
